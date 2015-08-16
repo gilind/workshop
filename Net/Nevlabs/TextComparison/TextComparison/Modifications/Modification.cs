@@ -1,80 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Drawing;
-using System.Linq;
 using TextComparison.Collections;
 
 namespace TextComparison.Modifications
 {
-    public abstract class Section
-    {
-        protected readonly Modification Modification;
-
-        protected Section(Modification modification, IEnumerable<string> lines, Color color)
-        {
-            Modification = modification;
-            Color = color;
-            Lines = lines.ToArray();
-        }
-
-        public abstract int StartIndex { get; }
-
-        public int Length
-        {
-            get { return Lines.Length; }
-        }
-
-        public string[] Lines { get; }
-
-        public Color Color { get; }
-    }
-
-    public class PrimarySection : Section
-    {
-        public PrimarySection(Modification modification, IEnumerable<string> lines, Color color)
-            : base(modification, lines, color)
-        {
-        }
-
-        public override int StartIndex
-        {
-            get
-            {
-                if (Modification.Previous == null)
-                {
-                    return 0;
-                }
-
-                Modification previous = (Modification) Modification.Previous;
-
-                return previous.Primary.StartIndex + previous.Primary.Length + 1;
-            }
-        }
-    }
-
-    public class SecondarySection : Section
-    {
-        public SecondarySection(Modification modification, IEnumerable<string> lines, Color color)
-            : base(modification, lines, color)
-        {
-        }
-
-        public override int StartIndex
-        {
-            get
-            {
-                if (Modification.Previous == null)
-                {
-                    return 0;
-                }
-
-                Modification previous = (Modification) Modification.Previous;
-
-                return previous.Secondary.StartIndex + previous.Secondary.Length + 1;
-            }
-        }
-    }
-
     public abstract class Modification : OwnedItem
     {
         protected static Color DefaultColor = SystemColors.Window;
