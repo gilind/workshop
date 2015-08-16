@@ -106,11 +106,11 @@
     <Compile Include="Collections\OwnedItem.cs" />
     <Compile Include="Collections\IOwnedItem.cs" />
     <Compile Include="Collections\IOwner.cs" />
-    <Compile Include="Experiments\Mody.cs" />
-    <Compile Include="Experiments\ModyCollection.cs" />
     <Compile Include="Merger.cs" />
     <Compile Include="ModificationCollection.cs" />
     <Compile Include="Collections\OwnedItemCollection.cs" />
+    <Compile Include="Modifications\Modification.cs" />
+    <Compile Include="Modifications\ModificationCollection.cs" />
     <Compile Include="Properties\AssemblyInfo.cs">
       <SubType>Code</SubType>
     </Compile>

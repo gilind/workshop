@@ -10,7 +10,7 @@ namespace TextComparison.Experiments
     {
         protected readonly Mody Mody;
 
-        public Section(Mody mody, IEnumerable<string> lines, Color color)
+        protected Section(Mody mody, IEnumerable<string> lines, Color color)
         {
             Mody = mody;
             Color = color;

@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Drawing;
 using System.Windows.Forms;
 using TextComparison.Experiments;
@@ -25,12 +24,6 @@ namespace TextComparison.UI
             set { secondaryLabel.Text = value; }
         }
 
-        private readonly Color _noChangedColor = SystemColors.Window;
-        private readonly Color _removedColor = Color.MistyRose;
-        private readonly Color _replacedColor = Color.MistyRose;
-        private readonly Color _addedColor = Color.LightGreen;
-        private readonly Color _lightGrayColor = SystemColors.ActiveCaption;
-
         public void Initialize(TextFile primaryFile, TextFile secondaryFile, ModyCollection modifications)
         {
             primaryListView.Items.Clear();
@@ -42,31 +35,32 @@ namespace TextComparison.UI
 
             foreach (var modification in modifications)
             {
-                ListViewItem primaryItem;
-                ListViewItem secondaryItem;
-
                 for (int index = 0; index < modification.Length; index++)
                 {
-                    primaryItem = new ListViewItem(rowNumber.ToString("00000"));
-                    primaryItem.BackColor = modification.Primary.Color; // _removedColor
+                    var primaryItem = new ListViewItem(rowNumber.ToString("00000"));
+                    primaryItem.BackColor = modification.Primary.Color;
+
                     string primaryLine = string.Empty;
                     if (index < modification.Primary.Length - 1)
                     {
                         primaryLine = modification.Primary.Lines[index];
                     }
-                    primaryItem.SubItems.Add(primaryLine);
 
-                    secondaryItem = new ListViewItem(rowNumber.ToString("00000"));
-                    secondaryItem.BackColor = modification.Secondary.Color; //_lightGrayColor;
+                    primaryItem.SubItems.Add(primaryLine);
+                    primaryListView.Items.Add(primaryItem);
+
+                    var secondaryItem = new ListViewItem(rowNumber.ToString("00000"));
+                    secondaryItem.BackColor = modification.Secondary.Color;
+
                     string secondaryLine = string.Empty;
                     if (index < modification.Secondary.Length - 1)
                     {
                         secondaryLine = modification.Secondary.Lines[index];
                     }
-                    secondaryItem.SubItems.Add(secondaryLine);
 
-                    primaryListView.Items.Add(primaryItem);
+                    secondaryItem.SubItems.Add(secondaryLine);
                     secondaryListView.Items.Add(secondaryItem);
+
                     rowNumber++;
                 }
 
