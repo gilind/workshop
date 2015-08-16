@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using TextComparison.Experiments;
 
 namespace TextComparison
 {
@@ -114,7 +115,7 @@ namespace TextComparison
             }
         }
 
-        private bool DetermineModification(int primaryStart, int primaryEnd, int secondaryStart, int secondaryEnd, List<Modification> modifications)
+        private bool DetermineModification(int primaryStart, int primaryEnd, int secondaryStart, int secondaryEnd, ModyCollection modifications)
         {
             bool result = false;
             int primaryLength = primaryEnd - primaryStart;
@@ -125,25 +126,25 @@ namespace TextComparison
                 if (primaryLength > 0)
                 {
                     var minLength = Math.Min(secondaryLength, primaryLength);
-                    modifications.Add(Modification.CreateReplaced(primaryStart, secondaryStart, minLength/*, _secondary.GetRange(secondaryStart, minLength)*/));
+                    modifications.AddReplaced(primaryStart, secondaryStart, minLength);
 
                     if (secondaryLength > primaryLength)
                     {
                         secondaryStart += minLength;
-                        modifications.Add(Modification.CreateAdded(primaryStart + minLength, secondaryStart, secondaryLength - primaryLength/*, _secondary.GetRange(secondaryStart, secondaryLength - primaryLength)*/));
+                        modifications.AddAdded(secondaryStart, secondaryLength - primaryLength);
                     }
                     else
                     {
                         if (primaryLength > secondaryLength)
                         {
                             primaryStart += minLength;
-                            modifications.Add(Modification.CreateRemoved(primaryStart, primaryLength - secondaryLength));
+                            modifications.AddRemoved(primaryStart, primaryLength - secondaryLength);
                         }
                     }
                 }
                 else
                 {
-                    modifications.Add(Modification.CreateAdded(primaryStart, secondaryStart, secondaryLength/*, _secondary.GetRange(secondaryStart, secondaryLength)*/));
+                    modifications.AddAdded(secondaryStart, secondaryLength);
                 }
                 result = true;
             }
@@ -151,7 +152,7 @@ namespace TextComparison
             {
                 if (primaryLength > 0)
                 {
-                    modifications.Add(Modification.CreateRemoved(primaryStart, primaryLength));
+                    modifications.AddRemoved(primaryStart, primaryLength);
                     result = true;
                 }
             }
@@ -161,12 +162,12 @@ namespace TextComparison
         private TextFile _primary;
         private TextFile _secondary;
 
-        public IList<Modification> Compare(TextFile primary, TextFile secondary)
+        public ModyCollection Compare(TextFile primary, TextFile secondary)
         {
             _primary = primary;
             _secondary = secondary;
 
-            List<Modification> result = new List<Modification>();
+            ModyCollection result = new ModyCollection(primary, secondary);
 
             if (primary.LineCount == 0 && secondary.LineCount == 0)
             {
@@ -181,7 +182,7 @@ namespace TextComparison
                 if (secondary.LineCount > 0)
                 {
                     // первый файл пустой, а второй имеет строки
-                    result.Add(Modification.CreateAdded(0, 0, secondary.LineCount/*, secondary.GetRange(0, secondary.LineCount)*/));
+                    result.AddAdded(0, secondary.LineCount);
                 }
 
                 _primary = null;
@@ -194,7 +195,7 @@ namespace TextComparison
                 if (primary.LineCount > 0)
                 {
                     // первый файл имеет строки, а второй пустой
-                    result.Add(Modification.CreateRemoved(0, primary.LineCount));
+                    result.AddRemoved(0, primary.LineCount);
                 }
 
                 _primary = null;
@@ -217,7 +218,7 @@ namespace TextComparison
                 if (DetermineModification(primaryIndex, area.PrimaryIndex, secondaryIndex, area.SecondaryIndex, result) ||
                     last == null)
                 {
-                    result.Add(Modification.CreateNoChanged(area));
+                    result.AddNoChanged(area.PrimaryIndex, area.SecondaryIndex, area.Length);
                 }
 
                 primaryIndex = area.PrimaryIndex + area.Length;

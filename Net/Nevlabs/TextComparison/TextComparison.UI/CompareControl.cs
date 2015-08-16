@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Drawing;
 using System.Windows.Forms;
+using TextComparison.Experiments;
 
 namespace TextComparison.UI
 {
@@ -30,7 +31,7 @@ namespace TextComparison.UI
         private readonly Color _addedColor = Color.LightGreen;
         private readonly Color _lightGrayColor = SystemColors.ActiveCaption;
 
-        public void Initialize(TextFile primaryFile, TextFile secondaryFile, IList<Modification> modifications)
+        public void Initialize(TextFile primaryFile, TextFile secondaryFile, ModyCollection modifications)
         {
             primaryListView.Items.Clear();
             secondaryListView.Items.Clear();
@@ -39,80 +40,102 @@ namespace TextComparison.UI
 
             int rowNumber = 1;
 
-            //Font strikeoutFont = new Font(Font, FontStyle.Strikeout);
-
             foreach (var modification in modifications)
             {
                 ListViewItem primaryItem;
                 ListViewItem secondaryItem;
-                int index;
 
-                switch (modification.Type)
+                for (int index = 0; index < modification.Length; index++)
                 {
-                    case ModificationType.Removed:
-                        for (index = 0; index < modification.Length; index++)
-                        {
-                            primaryItem = new ListViewItem(rowNumber.ToString("00000"));
-                            secondaryItem = new ListViewItem(rowNumber.ToString("00000"));
-                            primaryItem.BackColor = _removedColor;
-                            primaryItem.SubItems.Add(primaryFile[modification.PrimaryIndex + index].Line);
-                            secondaryItem.BackColor = _lightGrayColor;
+                    primaryItem = new ListViewItem(rowNumber.ToString("00000"));
+                    primaryItem.BackColor = modification.Primary.Color; // _removedColor
+                    string primaryLine = string.Empty;
+                    if (index < modification.Primary.Length - 1)
+                    {
+                        primaryLine = modification.Primary.Lines[index];
+                    }
+                    primaryItem.SubItems.Add(primaryLine);
 
-                            primaryListView.Items.Add(primaryItem);
-                            secondaryListView.Items.Add(secondaryItem);
-                            rowNumber++;
-                        }
-                        break;
+                    secondaryItem = new ListViewItem(rowNumber.ToString("00000"));
+                    secondaryItem.BackColor = modification.Secondary.Color; //_lightGrayColor;
+                    string secondaryLine = string.Empty;
+                    if (index < modification.Secondary.Length - 1)
+                    {
+                        secondaryLine = modification.Secondary.Lines[index];
+                    }
+                    secondaryItem.SubItems.Add(secondaryLine);
 
-                    case ModificationType.NoChanged:
-                        for (index = 0; index < modification.Length; index++)
-                        {
-                            primaryItem = new ListViewItem(rowNumber.ToString("00000"));
-                            secondaryItem = new ListViewItem(rowNumber.ToString("00000"));
-                            primaryItem.BackColor = _noChangedColor;
-                            primaryItem.SubItems.Add(primaryFile[modification.PrimaryIndex + index].Line);
-                            secondaryItem.BackColor = _noChangedColor;
-                            secondaryItem.SubItems.Add(secondaryFile[modification.SecondaryIndex + index].Line);
-
-                            primaryListView.Items.Add(primaryItem);
-                            secondaryListView.Items.Add(secondaryItem);
-                            rowNumber++;
-                        }
-                        break;
-
-                    case ModificationType.Added:
-                        for (index = 0; index < modification.Length; index++)
-                        {
-                            primaryItem = new ListViewItem(rowNumber.ToString("00000"));
-                            secondaryItem = new ListViewItem(rowNumber.ToString("00000"));
-                            primaryItem.BackColor = _lightGrayColor;
-                            primaryItem.SubItems.Add("");
-                            secondaryItem.BackColor = _addedColor;
-                            secondaryItem.SubItems.Add(secondaryFile[modification.SecondaryIndex + index].Line);
-
-                            primaryListView.Items.Add(primaryItem);
-                            secondaryListView.Items.Add(secondaryItem);
-                            rowNumber++;
-                        }
-                        break;
-
-                    case ModificationType.Replaced:
-                        for (index = 0; index < modification.Length; index++)
-                        {
-                            primaryItem = new ListViewItem(rowNumber.ToString("00000"));
-                            secondaryItem = new ListViewItem(rowNumber.ToString("00000"));
-                            primaryItem.BackColor = _replacedColor;
-                            //primaryItem.Font = strikeoutFont;
-                            primaryItem.SubItems.Add(primaryFile[modification.PrimaryIndex + index].Line);
-                            secondaryItem.BackColor = _addedColor;
-                            secondaryItem.SubItems.Add(secondaryFile[modification.SecondaryIndex + index].Line);
-
-                            primaryListView.Items.Add(primaryItem);
-                            secondaryListView.Items.Add(secondaryItem);
-                            rowNumber++;
-                        }
-                        break;
+                    primaryListView.Items.Add(primaryItem);
+                    secondaryListView.Items.Add(secondaryItem);
+                    rowNumber++;
                 }
+
+                //switch (modification.Type)
+                //{
+                //    case ModificationType.Removed:
+                //        for (index = 0; index < modification.Length; index++)
+                //        {
+                //            primaryItem = new ListViewItem(rowNumber.ToString("00000"));
+                //            secondaryItem = new ListViewItem(rowNumber.ToString("00000"));
+                //            primaryItem.BackColor = _removedColor;
+                //            primaryItem.SubItems.Add(primaryFile[modification.PrimaryIndex + index].Line);
+                //            secondaryItem.BackColor = _lightGrayColor;
+
+                //            primaryListView.Items.Add(primaryItem);
+                //            secondaryListView.Items.Add(secondaryItem);
+                //            rowNumber++;
+                //        }
+                //        break;
+
+                //    case ModificationType.NoChanged:
+                //        for (index = 0; index < modification.Length; index++)
+                //        {
+                //            primaryItem = new ListViewItem(rowNumber.ToString("00000"));
+                //            secondaryItem = new ListViewItem(rowNumber.ToString("00000"));
+                //            primaryItem.BackColor = _noChangedColor;
+                //            primaryItem.SubItems.Add(primaryFile[modification.PrimaryIndex + index].Line);
+                //            secondaryItem.BackColor = _noChangedColor;
+                //            secondaryItem.SubItems.Add(secondaryFile[modification.SecondaryIndex + index].Line);
+
+                //            primaryListView.Items.Add(primaryItem);
+                //            secondaryListView.Items.Add(secondaryItem);
+                //            rowNumber++;
+                //        }
+                //        break;
+
+                //    case ModificationType.Added:
+                //        for (index = 0; index < modification.Length; index++)
+                //        {
+                //            primaryItem = new ListViewItem(rowNumber.ToString("00000"));
+                //            secondaryItem = new ListViewItem(rowNumber.ToString("00000"));
+                //            primaryItem.BackColor = _lightGrayColor;
+                //            primaryItem.SubItems.Add("");
+                //            secondaryItem.BackColor = _addedColor;
+                //            secondaryItem.SubItems.Add(secondaryFile[modification.SecondaryIndex + index].Line);
+
+                //            primaryListView.Items.Add(primaryItem);
+                //            secondaryListView.Items.Add(secondaryItem);
+                //            rowNumber++;
+                //        }
+                //        break;
+
+                //    case ModificationType.Replaced:
+                //        for (index = 0; index < modification.Length; index++)
+                //        {
+                //            primaryItem = new ListViewItem(rowNumber.ToString("00000"));
+                //            secondaryItem = new ListViewItem(rowNumber.ToString("00000"));
+                //            primaryItem.BackColor = _replacedColor;
+                //            //primaryItem.Font = strikeoutFont;
+                //            primaryItem.SubItems.Add(primaryFile[modification.PrimaryIndex + index].Line);
+                //            secondaryItem.BackColor = _addedColor;
+                //            secondaryItem.SubItems.Add(secondaryFile[modification.SecondaryIndex + index].Line);
+
+                //            primaryListView.Items.Add(primaryItem);
+                //            secondaryListView.Items.Add(secondaryItem);
+                //            rowNumber++;
+                //        }
+                //        break;
+                //}
             }
         }
 

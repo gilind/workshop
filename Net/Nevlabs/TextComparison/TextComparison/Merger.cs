@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using TextComparison.Experiments;
 
 namespace TextComparison
 {
@@ -11,9 +12,9 @@ namespace TextComparison
             User1File = new TextFile();
             User2File = new TextFile();
 
-            ServerUser1Modifications = new List<Modification>();
-            ServerUser2Modifications = new List<Modification>();
-            MergedModifications = new List<Modification>();
+            ServerUser1Modifications = new ModyCollection(ServerFile, User1File);
+            ServerUser2Modifications = new ModyCollection(ServerFile, User2File);
+            MergedModifications = new List<Mody>();
         }
 
         public TextFile ServerFile { get; }
@@ -22,11 +23,11 @@ namespace TextComparison
 
         public TextFile User2File { get; }
 
-        public IList<Modification> ServerUser1Modifications { get; private set; }
+        public ModyCollection ServerUser1Modifications { get; private set; }
 
-        public IList<Modification> ServerUser2Modifications { get; private set; }
+        public ModyCollection ServerUser2Modifications { get; private set; }
 
-        public List<Modification> MergedModifications { get; }
+        public List<Mody> MergedModifications { get; }
 
         public event EventHandler StateChanged;
 
@@ -52,76 +53,76 @@ namespace TextComparison
 
         private void Поехали()
         {
-            // на первый список изменений начинаем накладывать второй
-            foreach (var user2Modification in ServerUser2Modifications)
-            {
-                if (user2Modification.Type == ModificationType.NoChanged)
-                {
-                    continue;
-                }
+            //// на первый список изменений начинаем накладывать второй
+            //foreach (var user2Modification in ServerUser2Modifications)
+            //{
+            //    if (user2Modification.Type == ModificationType.NoChanged)
+            //    {
+            //        continue;
+            //    }
 
-                int start = user2Modification.PrimaryIndex;
-                int end = user2Modification.PrimaryIndex + user2Modification.Length;
+            //    int start = user2Modification.PrimaryIndex;
+            //    int end = user2Modification.PrimaryIndex + user2Modification.Length;
 
-                Modification startModification = null;
-                Modification endModification = null;
+            //    Mody startModification = null;
+            //    Mody endModification = null;
 
-                // найти среди первых изменений, с которой пересекается текущая вторая
-                foreach (var user1Modification in ServerUser1Modifications)
-                {
-                    if (user1Modification.Contains(start))
-                    {
-                        startModification = user1Modification;
-                        break;
-                    }
-                }
+            //    // найти среди первых изменений, с которой пересекается текущая вторая
+            //    foreach (var user1Modification in ServerUser1Modifications)
+            //    {
+            //        if (user1Modification.Contains(start))
+            //        {
+            //            startModification = user1Modification;
+            //            break;
+            //        }
+            //    }
 
-                foreach (var user1Modification in ServerUser2Modifications)
-                {
-                    if (user1Modification.Contains(start))
-                    {
-                        startModification = user1Modification;
-                        break;
-                    }
-                }
+            //    foreach (var user1Modification in ServerUser2Modifications)
+            //    {
+            //        if (user1Modification.Contains(start))
+            //        {
+            //            startModification = user1Modification;
+            //            break;
+            //        }
+            //    }
 
 
-            }
+            //}
 
         }
 
         private void MarkConflicts()
         {
-            foreach (Modification user1Modification in ServerUser1Modifications)
-            {
-                if (user1Modification.Type == ModificationType.NoChanged ||
-                    user1Modification.Type == ModificationType.Added)
-                {
-                    continue;    
-                }
+            //foreach (Mody user1Modification in ServerUser1Modifications)
+            //{
+            //    if (user1Modification.Type == ModificationType.NoChanged ||
+            //        user1Modification.Type == ModificationType.Added)
+            //    {
+            //        continue;    
+            //    }
 
-                foreach (Modification user2Modification in ServerUser2Modifications)
-                {
-                    if (user2Modification.Type == ModificationType.NoChanged ||
-                        user2Modification.Type == ModificationType.Added)
-                    {
-                        continue;
-                    }
+            //    foreach (Mody user2Modification in ServerUser2Modifications)
+            //    {
+            //        if (user2Modification.Type == ModificationType.NoChanged ||
+            //            user2Modification.Type == ModificationType.Added)
+            //        {
+            //            continue;
+            //        }
 
-                    if (user1Modification.IntersectByPrimary(user2Modification))
-                    {
-                        user1Modification.HasConflict = true;
-                        user2Modification.HasConflict = true;
-                    }
-                }
-            }
+            //        if (user1Modification.IntersectByPrimary(user2Modification))
+            //        {
+            //            user1Modification.HasConflict = true;
+            //            user2Modification.HasConflict = true;
+            //        }
+            //    }
+            //}
         }
 
         private void MergeModification()
         {
             MergedModifications.Clear();
 
-            foreach (Modification user1Modification in ServerUser1Modifications)
+            foreach (Mody user1Modification in ServerUser1Modifications)
             {
                 //if (user1Modification.Type == ModificationType.NoChanged)
                 //{
@@ -131,7 +132,7 @@ namespace TextComparison
                 MergedModifications.Add(user1Modification);
             }
 
-            foreach (Modification user2Modification in ServerUser2Modifications)
+            foreach (Mody user2Modification in ServerUser2Modifications)
             {
                 //if (user2Modification.Type == ModificationType.NoChanged)
                 //{
@@ -141,7 +142,7 @@ namespace TextComparison
                 MergedModifications.Add(user2Modification);
             }
 
-            MergedModifications.Sort(Modification.PrimaryIndexComparer);
+            //MergedModifications.Sort(Mody.PrimaryIndexComparer);
         }
     }
 }

@@ -44,7 +44,7 @@ namespace TextComparison.Experiments
 
         public void AddAdded(int secondaryIndex, int length)
         {
-            string[] secondaryLines = _primary.GetRange(secondaryIndex, length);
+            string[] secondaryLines = _secondary.GetRange(secondaryIndex, length);
             Add(Mody.CreateAdded(secondaryLines));
         }
     }
