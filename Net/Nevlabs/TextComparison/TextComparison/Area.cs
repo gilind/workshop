@@ -1,12 +1,11 @@
 using System.Collections.Generic;
-using TextComparison.Collections;
 
 namespace TextComparison
 {
     /// <summary>
     /// Область, одновременно представленная в двух файлах - Primary и Secondary
     /// </summary>
-    public class Area : OwnedItem
+    public class Area// todo: хорошо бы избавиться
     {
         private class SecondaryComparer : IComparer<Area>
         {
@@ -39,7 +38,7 @@ namespace TextComparison
             get { return PrimaryIndex + Length; }
         }
 
-        public bool IntersectByPrimary(Area other)
+        public bool IntersectByPrimary(Area other)//todo: удалить
         {
             if (PrimaryIndex == other.PrimaryIndex || 
                 PrimaryIndex == other.EndIndex ||

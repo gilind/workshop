@@ -23,10 +23,18 @@ namespace TextComparisonTests
 
             modifications.Add(modification);
 
-            Assert.AreEqual(modification.Primary.StartIndex, 4);
+            Assert.AreEqual(modification.Primary.StartIndex, 3);
             Assert.AreEqual(modification.Primary.Length, 0);
+            Assert.AreEqual(modification.Secondary.StartIndex, 3);
+            Assert.AreEqual(modification.Secondary.Length, 3);
 
-            Assert.AreEqual(modification.Secondary.StartIndex, 4);
+            modification = Modification.CreateAdded(new List<string> { "ggg", "hhh", "iii" });
+
+            modifications.Add(modification);
+
+            Assert.AreEqual(modification.Primary.StartIndex, 3);
+            Assert.AreEqual(modification.Primary.Length, 0);
+            Assert.AreEqual(modification.Secondary.StartIndex, 6);
             Assert.AreEqual(modification.Secondary.Length, 3);
         }
     }

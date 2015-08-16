@@ -8,7 +8,7 @@ namespace TextComparison.Modifications
         private readonly TextFile _secondary;
 
         public ModificationCollection()
-            : this(null, null)
+            : this(new TextFile(), new TextFile())
         {
         }
 
@@ -41,6 +41,20 @@ namespace TextComparison.Modifications
         {
             string[] secondaryLines = _secondary.GetRange(secondaryIndex, length);
             Add(Modification.CreateAdded(secondaryLines));
+        }
+
+        public Modification FindModificationByPrimaryIndex(int targetPrimaryIndex)
+        {
+            foreach (Modification modification in Items)
+            {
+                if (modification.Primary.StartIndex <= targetPrimaryIndex &&
+                    targetPrimaryIndex < modification.Primary.StartIndex + modification.Primary.Length)
+                {
+                    return modification;
+                }
+            }
+
+            return null;
         }
     }
 }

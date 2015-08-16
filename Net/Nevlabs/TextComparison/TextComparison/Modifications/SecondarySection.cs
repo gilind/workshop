@@ -21,7 +21,7 @@ namespace TextComparison.Modifications
 
                 Modification previous = (Modification)Modification.Previous;
 
-                return previous.Secondary.StartIndex + previous.Secondary.Length + 1;
+                return previous.Secondary.StartIndex + previous.Secondary.Length;
             }
         }
     }

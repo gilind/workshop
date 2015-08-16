@@ -45,6 +45,14 @@ namespace TextComparison
             AddLine(string.Empty);
         }
 
+        public void AddLines(IEnumerable<string> lines)
+        {
+            foreach (string line in lines)
+            {
+                AddLine(line);
+            }
+        }
+
         public int LineCount
         {
             get { return Lines.Count; }

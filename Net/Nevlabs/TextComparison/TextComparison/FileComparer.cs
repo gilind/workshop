@@ -226,7 +226,7 @@ namespace TextComparison
                 last = area;
             }
 
-            // этот вызов решает проблему, когда файлы изначально разные
+            // этот вызов решает проблему, когда файлы совершенно разные
             // это граничная ситуация, областей пересечения нет
             DetermineModification(primaryIndex, primary.LineCount, secondaryIndex, secondary.LineCount, result);
 
