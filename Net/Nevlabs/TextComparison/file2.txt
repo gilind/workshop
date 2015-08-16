@@ -1,0 +1,24 @@
+public class TextLine : IComparable
+{
+	public string Line;
+	public int _hash;
+
+	public TextLine1(string str)
+	{
+		Line = str.Replace("\t","    ");
+		_hash = str.GetHashCode();
+	}
+	
+	public TextLine(int a)
+	{
+	}
+	
+	#region IComparable Members
+
+	public int CompareTo(object obj)
+	{
+		return _hash.CompareTo(((TextLine)obj)._hash);
+	}
+
+	#endregion
+}

@@ -1,0 +1,33 @@
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 14
+VisualStudioVersion = 14.0.23107.0
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TextComparison", "TextComparison\TextComparison.csproj", "{8AE4897A-EA74-49B1-BA55-D892C27AF9C9}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TextComparisonTests", "TextComparisonTests\TextComparisonTests.csproj", "{504349BB-0705-459A-8886-283E8436FC66}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TextComparison.UI", "TextComparison.UI\TextComparison.UI.csproj", "{03DD45D5-A882-4956-8448-E156B433E4A8}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{8AE4897A-EA74-49B1-BA55-D892C27AF9C9}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{8AE4897A-EA74-49B1-BA55-D892C27AF9C9}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{8AE4897A-EA74-49B1-BA55-D892C27AF9C9}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{8AE4897A-EA74-49B1-BA55-D892C27AF9C9}.Release|Any CPU.Build.0 = Release|Any CPU
+		{504349BB-0705-459A-8886-283E8436FC66}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{504349BB-0705-459A-8886-283E8436FC66}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{504349BB-0705-459A-8886-283E8436FC66}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{504349BB-0705-459A-8886-283E8436FC66}.Release|Any CPU.Build.0 = Release|Any CPU
+		{03DD45D5-A882-4956-8448-E156B433E4A8}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{03DD45D5-A882-4956-8448-E156B433E4A8}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{03DD45D5-A882-4956-8448-E156B433E4A8}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{03DD45D5-A882-4956-8448-E156B433E4A8}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+EndGlobal
