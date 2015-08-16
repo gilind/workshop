@@ -83,10 +83,10 @@ namespace TextComparison.Experiments
     public abstract class Mody : OwnedItem
     {
         protected static Color DefaultColor = SystemColors.Window;
-        protected static Color RemovedColor = Color.MistyRose;
-        protected static Color ReplacedColor = Color.MistyRose;
-        protected static Color AddedColor = Color.LightGreen;
-        protected static Color LightGrayColor = SystemColors.ActiveCaption;
+        protected static Color RemovedColor = Color.FromArgb(243, 230, 216);
+        protected static Color ReplacedColor = Color.FromArgb(218, 205, 230);
+        protected static Color AddedColor = Color.FromArgb(209, 232, 207);
+        protected static Color LightGrayColor = Color.FromArgb(208, 220, 234);
 
         private class NoChangedMody : Mody
         {
