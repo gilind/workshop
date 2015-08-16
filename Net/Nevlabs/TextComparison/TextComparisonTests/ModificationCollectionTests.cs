@@ -1,6 +1,5 @@
 ﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
 using TextComparison;
-using TextComparison.Experiments;
 
 namespace TextComparisonTests
 {
@@ -10,13 +9,13 @@ namespace TextComparisonTests
         [TestMethod]
         public void TestFindModificationByPrimaryIndex()
         {
-            //ModyCollection modifications = new ModyCollection();
+            //ModificationCollection modifications = new ModificationCollection();
 
-            //modifications.Add(Mody.CreateNoChanged(0, 0, 2));
-            //modifications.Add(Mody.CreateReplaced(2, 0, 2));
-            //modifications.Add(Mody.CreateNoChanged(4, 0, 2));
+            //modifications.Add(Modification.CreateNoChanged(0, 0, 2));
+            //modifications.Add(Modification.CreateReplaced(2, 0, 2));
+            //modifications.Add(Modification.CreateNoChanged(4, 0, 2));
 
-            //Mody wanted = modifications.FindModificationByPrimaryIndex(1);
+            //Modification wanted = modifications.FindModificationByPrimaryIndex(1);
             //Assert.AreEqual(wanted.Index, 0);
 
             //wanted = modifications.FindModificationByPrimaryIndex(3);

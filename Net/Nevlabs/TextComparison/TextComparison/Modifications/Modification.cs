@@ -4,25 +4,20 @@ using System.Drawing;
 using System.Linq;
 using TextComparison.Collections;
 
-namespace TextComparison.Experiments
+namespace TextComparison.Modifications
 {
     public abstract class Section
     {
-        protected readonly Mody Mody;
+        protected readonly Modification Modification;
 
-        protected Section(Mody mody, IEnumerable<string> lines, Color color)
+        protected Section(Modification modification, IEnumerable<string> lines, Color color)
         {
-            Mody = mody;
+            Modification = modification;
             Color = color;
             Lines = lines.ToArray();
         }
 
         public abstract int StartIndex { get; }
-
-        //public int EndIndex
-        //{
-        //    get { return StartIndex + Length; }
-        //}
 
         public int Length
         {
@@ -36,8 +31,8 @@ namespace TextComparison.Experiments
 
     public class PrimarySection : Section
     {
-        public PrimarySection(Mody mody, IEnumerable<string> lines, Color color)
-            : base(mody, lines, color)
+        public PrimarySection(Modification modification, IEnumerable<string> lines, Color color)
+            : base(modification, lines, color)
         {
         }
 
@@ -45,12 +40,12 @@ namespace TextComparison.Experiments
         {
             get
             {
-                if (Mody.Previous == null)
+                if (Modification.Previous == null)
                 {
                     return 0;
                 }
 
-                Mody previous = (Mody) Mody.Previous;
+                Modification previous = (Modification) Modification.Previous;
 
                 return previous.Primary.StartIndex + previous.Primary.Length + 1;
             }
@@ -59,8 +54,8 @@ namespace TextComparison.Experiments
 
     public class SecondarySection : Section
     {
-        public SecondarySection(Mody mody, IEnumerable<string> lines, Color color)
-            : base(mody, lines, color)
+        public SecondarySection(Modification modification, IEnumerable<string> lines, Color color)
+            : base(modification, lines, color)
         {
         }
 
@@ -68,53 +63,53 @@ namespace TextComparison.Experiments
         {
             get
             {
-                if (Mody.Previous == null)
+                if (Modification.Previous == null)
                 {
                     return 0;
                 }
 
-                Mody previous = (Mody) Mody.Previous;
+                Modification previous = (Modification) Modification.Previous;
 
                 return previous.Secondary.StartIndex + previous.Secondary.Length + 1;
             }
         }
     }
 
-    public abstract class Mody : OwnedItem
+    public abstract class Modification : OwnedItem
     {
         protected static Color DefaultColor = SystemColors.Window;
         protected static Color RemovedColor = Color.FromArgb(243, 230, 216);
-        protected static Color ReplacedColor = Color.FromArgb(218, 205, 230);
+        protected static Color ReplacedColor = Color.FromArgb(230, 202, 172);
         protected static Color AddedColor = Color.FromArgb(209, 232, 207);
         protected static Color LightGrayColor = Color.FromArgb(208, 220, 234);
 
-        private class NoChangedMody : Mody
+        private class NoChangedModification : Modification
         {
-            public NoChangedMody(IEnumerable<string> lines)
+            public NoChangedModification(IEnumerable<string> lines)
                 : base("NoChanged", lines, lines, DefaultColor, DefaultColor)
             {
             }
         }
 
-        private class ReplacedMody : Mody
+        private class ReplacedModification : Modification
         {
-            public ReplacedMody(IEnumerable<string> primaryLines, IEnumerable<string> secondaryLines)
+            public ReplacedModification(IEnumerable<string> primaryLines, IEnumerable<string> secondaryLines)
                 : base("Replaced", primaryLines, secondaryLines, ReplacedColor, AddedColor)
             {
             }
         }
 
-        private class RemovedMody : Mody
+        private class RemovedModification : Modification
         {
-            public RemovedMody(IEnumerable<string> primaryLines)
+            public RemovedModification(IEnumerable<string> primaryLines)
                 : base("Removed", primaryLines, new List<string>(), RemovedColor, LightGrayColor)
             {
             }
         }
 
-        private class AddedMody : Mody
+        private class AddedModification : Modification
         {
-            public AddedMody(IEnumerable<string> secondaryLines)
+            public AddedModification(IEnumerable<string> secondaryLines)
                 : base("Added", new List<string>(), secondaryLines, LightGrayColor, AddedColor)
             {
             }
@@ -122,7 +117,7 @@ namespace TextComparison.Experiments
 
         public string Name { get; }
 
-        protected Mody(
+        protected Modification(
             string name,
             IEnumerable<string> primaryLines,
             IEnumerable<string> secondaryLines,
@@ -143,24 +138,24 @@ namespace TextComparison.Experiments
             get { return Math.Max(Primary.Length, Secondary.Length); }
         }
 
-        public static Mody CreateNoChanged(IEnumerable<string> lines)
+        public static Modification CreateNoChanged(IEnumerable<string> lines)
         {
-            return new NoChangedMody(lines);
+            return new NoChangedModification(lines);
         }
 
-        public static Mody CreateReplaced(IEnumerable<string> primaryLines, IEnumerable<string> secondaryLines)
+        public static Modification CreateReplaced(IEnumerable<string> primaryLines, IEnumerable<string> secondaryLines)
         {
-            return new ReplacedMody(primaryLines, secondaryLines);
+            return new ReplacedModification(primaryLines, secondaryLines);
         }
 
-        public static Mody CreateRemoved(IEnumerable<string> primaryLines)
+        public static Modification CreateRemoved(IEnumerable<string> primaryLines)
         {
-            return new RemovedMody(primaryLines);
+            return new RemovedModification(primaryLines);
         }
 
-        public static Mody CreateAdded(IEnumerable<string> secondaryLines)
+        public static Modification CreateAdded(IEnumerable<string> secondaryLines)
         {
-            return new AddedMody(secondaryLines);
+            return new AddedModification(secondaryLines);
         }
     }
 }

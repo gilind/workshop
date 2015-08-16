@@ -54,12 +54,12 @@
   </Choose>
   <ItemGroup>
     <Compile Include="FileComparerTests.cs" />
+    <Compile Include="ModificationTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="TextLineTests.cs" />
     <Compile Include="AreaTest.cs" />
     <Compile Include="OwnedItemCollectionTest.cs" />
     <Compile Include="ModificationCollectionTests.cs" />
-    <Compile Include="ModyTests.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\TextComparison\TextComparison.csproj">

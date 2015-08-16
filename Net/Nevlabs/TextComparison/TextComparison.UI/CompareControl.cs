@@ -1,7 +1,6 @@
 ﻿using System;
-using System.Drawing;
 using System.Windows.Forms;
-using TextComparison.Experiments;
+using TextComparison.Modifications;
 
 namespace TextComparison.UI
 {
@@ -24,7 +23,7 @@ namespace TextComparison.UI
             set { secondaryLabel.Text = value; }
         }
 
-        public void Initialize(TextFile primaryFile, TextFile secondaryFile, ModyCollection modifications)
+        public void Initialize(TextFile primaryFile, TextFile secondaryFile, ModificationCollection modifications)
         {
             primaryListView.Items.Clear();
             secondaryListView.Items.Clear();
@@ -63,73 +62,6 @@ namespace TextComparison.UI
 
                     rowNumber++;
                 }
-
-                //switch (modification.Type)
-                //{
-                //    case ModificationType.Removed:
-                //        for (index = 0; index < modification.Length; index++)
-                //        {
-                //            primaryItem = new ListViewItem(rowNumber.ToString("00000"));
-                //            secondaryItem = new ListViewItem(rowNumber.ToString("00000"));
-                //            primaryItem.BackColor = _removedColor;
-                //            primaryItem.SubItems.Add(primaryFile[modification.PrimaryIndex + index].Line);
-                //            secondaryItem.BackColor = _lightGrayColor;
-
-                //            primaryListView.Items.Add(primaryItem);
-                //            secondaryListView.Items.Add(secondaryItem);
-                //            rowNumber++;
-                //        }
-                //        break;
-
-                //    case ModificationType.NoChanged:
-                //        for (index = 0; index < modification.Length; index++)
-                //        {
-                //            primaryItem = new ListViewItem(rowNumber.ToString("00000"));
-                //            secondaryItem = new ListViewItem(rowNumber.ToString("00000"));
-                //            primaryItem.BackColor = _noChangedColor;
-                //            primaryItem.SubItems.Add(primaryFile[modification.PrimaryIndex + index].Line);
-                //            secondaryItem.BackColor = _noChangedColor;
-                //            secondaryItem.SubItems.Add(secondaryFile[modification.SecondaryIndex + index].Line);
-
-                //            primaryListView.Items.Add(primaryItem);
-                //            secondaryListView.Items.Add(secondaryItem);
-                //            rowNumber++;
-                //        }
-                //        break;
-
-                //    case ModificationType.Added:
-                //        for (index = 0; index < modification.Length; index++)
-                //        {
-                //            primaryItem = new ListViewItem(rowNumber.ToString("00000"));
-                //            secondaryItem = new ListViewItem(rowNumber.ToString("00000"));
-                //            primaryItem.BackColor = _lightGrayColor;
-                //            primaryItem.SubItems.Add("");
-                //            secondaryItem.BackColor = _addedColor;
-                //            secondaryItem.SubItems.Add(secondaryFile[modification.SecondaryIndex + index].Line);
-
-                //            primaryListView.Items.Add(primaryItem);
-                //            secondaryListView.Items.Add(secondaryItem);
-                //            rowNumber++;
-                //        }
-                //        break;
-
-                //    case ModificationType.Replaced:
-                //        for (index = 0; index < modification.Length; index++)
-                //        {
-                //            primaryItem = new ListViewItem(rowNumber.ToString("00000"));
-                //            secondaryItem = new ListViewItem(rowNumber.ToString("00000"));
-                //            primaryItem.BackColor = _replacedColor;
-                //            //primaryItem.Font = strikeoutFont;
-                //            primaryItem.SubItems.Add(primaryFile[modification.PrimaryIndex + index].Line);
-                //            secondaryItem.BackColor = _addedColor;
-                //            secondaryItem.SubItems.Add(secondaryFile[modification.SecondaryIndex + index].Line);
-
-                //            primaryListView.Items.Add(primaryItem);
-                //            secondaryListView.Items.Add(secondaryItem);
-                //            rowNumber++;
-                //        }
-                //        break;
-                //}
             }
         }
 
@@ -151,7 +83,7 @@ namespace TextComparison.UI
             secondaryListView.Columns[1].Width = secondaryListView.ClientRectangle.Width - secondaryListView.Columns[0].Width;
         }
 
-        private void SynchronizeCursor(ListView first, ListView second)
+        private static void SynchronizeCursor(ListView first, ListView second)
         {
             if (first.SelectedIndices.Count > 0)
             {

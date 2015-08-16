@@ -1,6 +1,6 @@
 using System;
 using System.Collections.Generic;
-using TextComparison.Experiments;
+using TextComparison.Modifications;
 
 namespace TextComparison
 {
@@ -115,7 +115,7 @@ namespace TextComparison
             }
         }
 
-        private bool DetermineModification(int primaryStart, int primaryEnd, int secondaryStart, int secondaryEnd, ModyCollection modifications)
+        private bool DetermineModification(int primaryStart, int primaryEnd, int secondaryStart, int secondaryEnd, ModificationCollection modifications)
         {
             bool result = false;
             int primaryLength = primaryEnd - primaryStart;
@@ -162,12 +162,12 @@ namespace TextComparison
         private TextFile _primary;
         private TextFile _secondary;
 
-        public ModyCollection Compare(TextFile primary, TextFile secondary)
+        public ModificationCollection Compare(TextFile primary, TextFile secondary)
         {
             _primary = primary;
             _secondary = secondary;
 
-            ModyCollection result = new ModyCollection(primary, secondary);
+            ModificationCollection result = new ModificationCollection(primary, secondary);
 
             if (primary.LineCount == 0 && secondary.LineCount == 0)
             {

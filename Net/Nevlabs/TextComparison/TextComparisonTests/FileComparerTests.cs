@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using TextComparison;
-using TextComparison.Experiments;
+using TextComparison.Modifications;
 
 namespace TextComparisonTests
 {
@@ -10,7 +10,7 @@ namespace TextComparisonTests
     public class FileComparerTests
     {
         private static void ModificationAreEqual(
-            Mody modification,
+            Modification modification,
             string modificationName,
             int primaryIndex,
             int secondaryIndex,
@@ -35,7 +35,7 @@ namespace TextComparisonTests
             file2.AddLine("3");
 
             FileComparer fileComparer = new FileComparer();
-            ModyCollection report = fileComparer.Compare(file1, file2);
+            ModificationCollection report = fileComparer.Compare(file1, file2);
 
             ModificationAreEqual(report[0], "NoChanged", 0, 0, 1);
             ModificationAreEqual(report[1], "Added", -1, 1, 1);
@@ -56,7 +56,7 @@ namespace TextComparisonTests
             file2.AddLine("3");
 
             FileComparer fileComparer = new FileComparer();
-            ModyCollection report = fileComparer.Compare(file1, file2);
+            ModificationCollection report = fileComparer.Compare(file1, file2);
 
             ModificationAreEqual(report[0], "NoChanged", 0, 0, 1);
             ModificationAreEqual(report[1], "Replaced", 1, 1, 1);
@@ -75,7 +75,7 @@ namespace TextComparisonTests
             file2.AddLine("2");
 
             FileComparer fileComparer = new FileComparer();
-            ModyCollection report = fileComparer.Compare(file1, file2);
+            ModificationCollection report = fileComparer.Compare(file1, file2);
 
             ModificationAreEqual(report[0], "Replaced", 0, 0, 1);
             ModificationAreEqual(report[1], "Removed", 1, -1, 2);
@@ -130,7 +130,7 @@ namespace TextComparisonTests
             file2.AddLine("}");
 
             FileComparer fileComparer = new FileComparer();
-            ModyCollection report = fileComparer.Compare(file1, file2);
+            ModificationCollection report = fileComparer.Compare(file1, file2);
 
             ModificationAreEqual(report[0], "NoChanged", 0, 0, 5);
             ModificationAreEqual(report[1], "Replaced", 5, 5, 1);
@@ -185,7 +185,7 @@ namespace TextComparisonTests
 
             FileComparer fileComparer = new FileComparer();
 
-            ModyCollection report = fileComparer.Compare(emptyFile, file2);
+            ModificationCollection report = fileComparer.Compare(emptyFile, file2);
             ModificationAreEqual(report[0], "Added", -1, 0, 3);
 
             report = fileComparer.Compare(file2, emptyFile);
