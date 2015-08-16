@@ -1,5 +1,6 @@
 using System.Collections.Generic;
 using System.IO;
+using System.Linq;
 
 namespace TextComparison
 {
@@ -54,7 +55,7 @@ namespace TextComparison
             get { return Lines[index]; }
         }
 
-        public IList<string> GetRange(int start, int length)
+        public string[] GetRange(int start, int length)
         {
             IList<string> result = new List<string>();
 
@@ -63,7 +64,7 @@ namespace TextComparison
                 result.Add(Lines[row].Line);
             }
 
-            return result;
+            return result.ToArray();
         }
     }
 }
