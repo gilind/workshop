@@ -12,7 +12,7 @@ namespace TextComparison.Modifications
         {
             Modification = modification;
             Color = color;
-            Lines = lines.ToArray();
+            Lines = lines == null ? new string[0] : lines.ToArray();
         }
 
         public abstract int StartIndex { get; }
@@ -22,7 +22,7 @@ namespace TextComparison.Modifications
             get { return Lines.Length; }
         }
 
-        public string[] Lines { get; }
+        public string[] Lines { get; protected set; }
 
         public Color Color { get; }
     }

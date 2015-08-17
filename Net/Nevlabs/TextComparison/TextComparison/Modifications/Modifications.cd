@@ -26,31 +26,51 @@
           <NewMemberFileName>Modifications\Modification.cs</NewMemberFileName>
         </TypeIdentifier>
       </Class>
+      <Class Name="TextComparison.Modifications.Modification.MixedModification" Collapsed="true">
+        <TypeIdentifier>
+          <NewMemberFileName>Modifications\Modification.cs</NewMemberFileName>
+        </TypeIdentifier>
+      </Class>
     </NestedTypes>
     <TypeIdentifier>
-      <HashCode>AAgAAAAACAAAAgQAAAAEAARABAAQACAAAEABAACAAAA=</HashCode>
+      <HashCode>AAgAAAgAAAAAAgQEAAAEAARABAAQACAQUEABAACAARA=</HashCode>
       <FileName>Modifications\Modification.cs</FileName>
     </TypeIdentifier>
+    <Lollipop Position="0.2" />
   </Class>
   <Class Name="TextComparison.Modifications.Section" Collapsed="true">
-    <Position X="4.25" Y="0.5" Width="1.5" />
+    <Position X="4.5" Y="0.5" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AAAAAAAAAAAAAAAAAAAAAABIAAAAAIACAAAAgAAAAAA=</HashCode>
       <FileName>Modifications\Section.cs</FileName>
     </TypeIdentifier>
   </Class>
   <Class Name="TextComparison.Modifications.PrimarySection" Collapsed="true">
-    <Position X="3.75" Y="1.75" Width="1.5" />
+    <Position X="3.5" Y="1.75" Width="1.75" />
     <TypeIdentifier>
       <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAIAAAAAAAAAAAAA=</HashCode>
       <FileName>Modifications\PrimarySection.cs</FileName>
     </TypeIdentifier>
   </Class>
   <Class Name="TextComparison.Modifications.SecondarySection" Collapsed="true">
-    <Position X="5.5" Y="1.75" Width="1.5" />
+    <Position X="5.5" Y="1.75" Width="2" />
     <TypeIdentifier>
       <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAIAAAAAAAAAAAAA=</HashCode>
       <FileName>Modifications\SecondarySection.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="TextComparison.Modifications.PrimaryMixedSection" Collapsed="true">
+    <Position X="3.5" Y="2.75" Width="1.75" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Modifications\PrimaryMixedSection.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="TextComparison.Modifications.SecondaryMixedSection" Collapsed="true">
+    <Position X="5.5" Y="2.75" Width="2" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Modifications\SecondaryMixedSection.cs</FileName>
     </TypeIdentifier>
   </Class>
   <Font Name="Segoe UI" Size="9" />

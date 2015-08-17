@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Drawing;
 using System.Linq;
@@ -13,6 +14,7 @@ namespace TextComparison.Modifications
         protected static Color ReplacedColor = Color.FromArgb(230, 202, 172);
         protected static Color AddedColor = Color.FromArgb(209, 232, 207);
         protected static Color EmptyColor = Color.FromArgb(208, 220, 234);
+        protected static Color MixedColor = Color.FromArgb(255, 208, 116);
 
         private class NoChangedModification : Modification
         {
@@ -115,6 +117,33 @@ namespace TextComparison.Modifications
             }
         }
 
+        private class MixedModification : Modification
+        {
+            private readonly IEnumerable<Modification> _firstModifications;
+            private readonly IEnumerable<Modification> _secondModifications;
+
+            public MixedModification(IEnumerable<Modification> firstModifications, IEnumerable<Modification> secondModifications)
+                : base("Mixed", null, null, MixedColor, MixedColor)
+            {
+                _firstModifications = firstModifications;
+                _secondModifications = secondModifications;
+
+                Primary = new PrimaryMixedSection(this, firstModifications, MixedColor);
+                Secondary = new SecondaryMixedSection(this, firstModifications, secondModifications, MixedColor);
+            }
+
+            protected override Modification[] DoSplit(int primaryIndex)
+            {
+                // Mixed нельзя разделить
+                return new Modification[] { this };
+            }
+
+            public override object Clone()
+            {
+                return new MixedModification(_firstModifications, _secondModifications);
+            }
+        }
+
         public string Name { get; }
 
         protected Modification(
@@ -129,9 +158,9 @@ namespace TextComparison.Modifications
             Secondary = new SecondarySection(this, secondaryLines, secondaryColor);
         }
 
-        public Section Primary { get; }
+        public Section Primary { get; protected set; }
 
-        public Section Secondary { get; }
+        public Section Secondary { get; protected set; }
 
         public int Length
         {
@@ -156,6 +185,11 @@ namespace TextComparison.Modifications
         public static Modification CreateAdded(IEnumerable<string> secondaryLines)
         {
             return new AddedModification(secondaryLines);
+        }
+
+        public static Modification CreateMixed(IEnumerable<Modification> firstModifications, IEnumerable<Modification> secondModifications)
+        {
+            return new MixedModification(firstModifications, secondModifications);
         }
 
         protected abstract Modification[] DoSplit(int primaryIndex);
@@ -200,19 +234,6 @@ namespace TextComparison.Modifications
             }
 
             return DoSplit(primaryIndex);
-
-            //Modification first = CreateTheSameToSplit();
-
-            //if (first == null)
-            //{
-            //    result.Add(this);
-
-            //    return result.ToArray();
-            //}
-
-            ////first.Primary.Lines
-
-            //return result.ToArray();
         }
     }
 }
