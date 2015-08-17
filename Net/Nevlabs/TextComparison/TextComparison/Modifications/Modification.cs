@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Drawing;
+using System.Linq;
 using TextComparison.Collections;
 
 namespace TextComparison.Modifications
@@ -19,6 +20,19 @@ namespace TextComparison.Modifications
                 : base("NoChanged", lines, lines, DefaultColor, DefaultColor)
             {
             }
+
+            protected override Modification[] DoSplit(int primaryIndex)
+            {
+                string[] firstLines;
+                string[] secondLines;
+                SplitLines(Primary.Lines, primaryIndex - Primary.StartIndex, out firstLines, out secondLines);
+
+                return new Modification[]
+                {
+                    new NoChangedModification(firstLines),
+                    new NoChangedModification(secondLines)
+                };
+            }
         }
 
         private class ReplacedModification : Modification
@@ -26,6 +40,23 @@ namespace TextComparison.Modifications
             public ReplacedModification(IEnumerable<string> primaryLines, IEnumerable<string> secondaryLines)
                 : base("Replaced", primaryLines, secondaryLines, ReplacedColor, AddedColor)
             {
+            }
+
+            protected override Modification[] DoSplit(int primaryIndex)
+            {
+                string[] primaryFirstLines;
+                string[] primarySecondLines;
+                SplitLines(Primary.Lines, primaryIndex - Primary.StartIndex, out primaryFirstLines, out primarySecondLines);
+
+                string[] secondaryFirstLines;
+                string[] secondarySecondLines;
+                SplitLines(Secondary.Lines, primaryIndex - Secondary.StartIndex, out secondaryFirstLines, out secondarySecondLines);
+
+                return new Modification[]
+                {
+                    new ReplacedModification(primaryFirstLines, secondaryFirstLines),
+                    new ReplacedModification(primarySecondLines, secondarySecondLines)
+                };
             }
         }
 
@@ -35,6 +66,19 @@ namespace TextComparison.Modifications
                 : base("Removed", primaryLines, new List<string>(), RemovedColor, EmptyColor)
             {
             }
+
+            protected override Modification[] DoSplit(int primaryIndex)
+            {
+                string[] firstLines;
+                string[] secondLines;
+                SplitLines(Secondary.Lines, primaryIndex - Secondary.StartIndex, out firstLines, out secondLines);
+
+                return new Modification[]
+                {
+                    new RemovedModification(firstLines),
+                    new RemovedModification(secondLines)
+                };
+            }
         }
 
         private class AddedModification : Modification
@@ -42,6 +86,12 @@ namespace TextComparison.Modifications
             public AddedModification(IEnumerable<string> secondaryLines)
                 : base("Added", new List<string>(), secondaryLines, EmptyColor, AddedColor)
             {
+            }
+
+            protected override Modification[] DoSplit(int primaryIndex)
+            {
+                // Added нельзя разделить
+                return new Modification[] {this};
             }
         }
 
@@ -88,9 +138,59 @@ namespace TextComparison.Modifications
             return new AddedModification(secondaryLines);
         }
 
+        protected abstract Modification[] DoSplit(int primaryIndex);
+
         public override string ToString()
         {
             return $"{Name}, ({Primary.StartIndex}, {Primary.Length}, {Secondary.StartIndex}, {Secondary.Length})";
+        }
+
+        protected void SplitLines(IList<string> lines, int index, out string[] first, out string[] second)
+        {
+            IList<string> firstResult = new List<string>();
+
+            for (int lineIndex = 0; lineIndex < index; lineIndex++)
+            {
+                firstResult.Add(lines[lineIndex]);
+            }
+
+            first = firstResult.ToArray();
+
+            IList<string> secondResult = new List<string>();
+
+            for (int lineIndex = index; lineIndex < lines.Count; lineIndex++)
+            {
+                secondResult.Add(lines[lineIndex]);
+            }
+
+            second = secondResult.ToArray();
+        }
+
+        public Modification[] Split(int primaryIndex)
+        {
+            IList<Modification> result = new List<Modification>();
+
+            if (primaryIndex <= Primary.StartIndex || primaryIndex >= Primary.StartIndex + Primary.Length)
+            {
+                result.Add(this);
+
+                return result.ToArray();
+            }
+
+            return DoSplit(primaryIndex);
+
+            //Modification first = CreateTheSameToSplit();
+
+            //if (first == null)
+            //{
+            //    result.Add(this);
+
+            //    return result.ToArray();
+            //}
+
+            ////first.Primary.Lines
+
+            //return result.ToArray();
         }
     }
 }

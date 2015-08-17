@@ -18,9 +18,9 @@ namespace TextComparisonTests
 
             ModificationCollection modifications = new ModificationCollection(primary, secondary);
 
-            modifications.AddNoChanged(0, 0, 2);
+            modifications.AddNoChanged(0, 2);
             modifications.AddReplaced(2, 0, 2);
-            modifications.AddNoChanged(4, 0, 2);
+            modifications.AddNoChanged(4, 2);
 
             Modification wanted = modifications.FindModificationByPrimaryIndex(1);
             Assert.AreEqual(wanted.Index, 0);

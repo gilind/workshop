@@ -218,7 +218,7 @@ namespace TextComparison
                 if (DetermineModification(primaryIndex, area.PrimaryIndex, secondaryIndex, area.SecondaryIndex, result) ||
                     last == null)
                 {
-                    result.AddNoChanged(area.PrimaryIndex, area.SecondaryIndex, area.Length);
+                    result.AddNoChanged(area.PrimaryIndex, area.Length);
                 }
 
                 primaryIndex = area.PrimaryIndex + area.Length;

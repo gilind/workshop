@@ -18,7 +18,7 @@ namespace TextComparison.Modifications
             _secondary = secondary;
         }
 
-        public void AddNoChanged(int primaryIndex, int secondaryIndex, int length)
+        public void AddNoChanged(int primaryIndex, int length)
         {
             string[] lines = _primary.GetRange(primaryIndex, length);
             Add(Modification.CreateNoChanged(lines));
