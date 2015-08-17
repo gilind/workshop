@@ -1,4 +1,5 @@
-﻿using TextComparison.Collections;
+﻿using System.Collections.Generic;
+using TextComparison.Collections;
 
 namespace TextComparison.Modifications
 {
@@ -16,6 +17,17 @@ namespace TextComparison.Modifications
         {
             _primary = primary;
             _secondary = secondary;
+        }
+
+        public ModificationCollection(ModificationCollection otherCollection)
+        {
+            _primary = otherCollection._primary;
+            _secondary = otherCollection._secondary;
+
+            foreach (Modification modification in otherCollection)
+            {
+                Add((Modification) modification.Clone());
+            }
         }
 
         public void AddNoChanged(int primaryIndex, int length)
@@ -75,6 +87,14 @@ namespace TextComparison.Modifications
             {
                 Insert(targetIndex, modification);
                 targetIndex++;
+            }
+        }
+
+        public void Split(IEnumerable<Modification> modifications)
+        {
+            foreach (Modification modification in modifications)
+            {
+                Split(modification.Primary.StartIndex);
             }
         }
     }

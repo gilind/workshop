@@ -6,7 +6,7 @@ using TextComparison.Collections;
 
 namespace TextComparison.Modifications
 {
-    public abstract class Modification : OwnedItem
+    public abstract class Modification : OwnedItem, ICloneable
     {
         protected static Color DefaultColor = SystemColors.Window;
         protected static Color RemovedColor = Color.FromArgb(243, 230, 216);
@@ -33,6 +33,11 @@ namespace TextComparison.Modifications
                     new NoChangedModification(secondLines)
                 };
             }
+
+            public override object Clone()
+            {
+                return new NoChangedModification(Primary.Lines);
+            }
         }
 
         private class ReplacedModification : Modification
@@ -58,6 +63,11 @@ namespace TextComparison.Modifications
                     new ReplacedModification(primarySecondLines, secondarySecondLines)
                 };
             }
+
+            public override object Clone()
+            {
+                return new ReplacedModification(Primary.Lines, Secondary.Lines);
+            }
         }
 
         private class RemovedModification : Modification
@@ -79,6 +89,11 @@ namespace TextComparison.Modifications
                     new RemovedModification(secondLines)
                 };
             }
+
+            public override object Clone()
+            {
+                return new RemovedModification(Primary.Lines);
+            }
         }
 
         private class AddedModification : Modification
@@ -92,6 +107,11 @@ namespace TextComparison.Modifications
             {
                 // Added нельзя разделить
                 return new Modification[] {this};
+            }
+
+            public override object Clone()
+            {
+                return new AddedModification(Secondary.Lines);
             }
         }
 
@@ -144,6 +164,8 @@ namespace TextComparison.Modifications
         {
             return $"{Name}, ({Primary.StartIndex}, {Primary.Length}, {Secondary.StartIndex}, {Secondary.Length})";
         }
+
+        public abstract object Clone();
 
         protected void SplitLines(IList<string> lines, int index, out string[] first, out string[] second)
         {
