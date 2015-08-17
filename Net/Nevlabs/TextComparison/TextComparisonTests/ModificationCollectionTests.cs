@@ -34,5 +34,24 @@ namespace TextComparisonTests
             wanted = modifications.FindModificationByPrimaryIndex(5);
             Assert.AreEqual(wanted.Index, 2);
         }
+
+        [TestMethod]
+        public void TestSplit()
+        {
+            TextFile primary = new TextFile();
+            primary.AddLines(new[] { "a", "b", "c", "d", "e", "f" });
+
+            TextFile secondary = new TextFile();
+            secondary.AddLines(new[] { "1", "2", "3", "4", "5", "6" });
+
+            ModificationCollection modifications = new ModificationCollection(primary, secondary);
+
+            modifications.AddNoChanged(0, 2);
+            modifications.AddReplaced(2, 0, 2);
+            modifications.AddAdded(4, 2);
+
+            modifications.Split(3); // индекс в середине
+            Assert.AreEqual(modifications.Count, 4);
+        }
     }
 }

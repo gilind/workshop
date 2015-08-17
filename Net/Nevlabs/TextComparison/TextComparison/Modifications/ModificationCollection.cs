@@ -56,5 +56,26 @@ namespace TextComparison.Modifications
 
             return null;
         }
+
+        public void Split(int targetPrimaryIndex)
+        {
+            Modification target = FindModificationByPrimaryIndex(targetPrimaryIndex);
+
+            if (target == null)
+            {
+                return;
+            }
+
+            int targetIndex = target.Index;
+            Modification[] splited = target.Split(targetPrimaryIndex);
+
+            target.Remove();
+
+            foreach (Modification modification in splited)
+            {
+                Insert(targetIndex, modification);
+                targetIndex++;
+            }
+        }
     }
 }
