@@ -19,7 +19,7 @@ namespace TextComparison.Modifications
         private class NoChangedModification : Modification
         {
             public NoChangedModification(IEnumerable<string> lines)
-                : base("NoChanged", lines, lines, DefaultColor, DefaultColor)
+                : base(NoChanged, lines, lines, DefaultColor, DefaultColor)
             {
             }
 
@@ -145,6 +145,13 @@ namespace TextComparison.Modifications
         }
 
         public string Name { get; }
+
+        private const string NoChanged = "NoChanged";
+
+        public bool IsNoChanged
+        {
+            get { return Name == NoChanged; }
+        }
 
         protected Modification(
             string name,

@@ -23,12 +23,12 @@ namespace TextComparison.UI
             set { secondaryLabel.Text = value; }
         }
 
-        public void Initialize(TextFile primaryFile, TextFile secondaryFile, ModificationCollection modifications)
+        public void Initialize(ModificationCollection modifications)
         {
             primaryListView.Items.Clear();
             secondaryListView.Items.Clear();
-            primaryTextBox.Text = primaryFile.Name;
-            secondaryTextBox.Text = secondaryFile.Name;
+            primaryTextBox.Text = modifications.Primary.Name;
+            secondaryTextBox.Text = modifications.Secondary.Name;
 
             int rowNumber = 1;
 

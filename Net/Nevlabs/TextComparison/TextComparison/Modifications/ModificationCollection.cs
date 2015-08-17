@@ -5,8 +5,8 @@ namespace TextComparison.Modifications
 {
     public class ModificationCollection : OwnedItemCollection<Modification>
     {
-        private readonly TextFile _primary;
-        private readonly TextFile _secondary;
+        public TextFile Primary { get; }
+        public TextFile Secondary { get; }
 
         public ModificationCollection()
             : this(new TextFile(), new TextFile())
@@ -15,44 +15,56 @@ namespace TextComparison.Modifications
 
         public ModificationCollection(TextFile primary, TextFile secondary)
         {
-            _primary = primary;
-            _secondary = secondary;
+            Primary = primary;
+            Secondary = secondary;
         }
 
         public ModificationCollection(ModificationCollection otherCollection)
         {
-            _primary = otherCollection._primary;
-            _secondary = otherCollection._secondary;
+            Primary = otherCollection.Primary;
+            Secondary = otherCollection.Secondary;
+
+            Initialize(otherCollection);
+        }
+
+        public void Initialize(IEnumerable<Modification> otherCollection)
+        {
+            Clear();
 
             foreach (Modification modification in otherCollection)
             {
-                Add((Modification) modification.Clone());
+                Add((Modification)modification.Clone());
             }
         }
 
         public void AddNoChanged(int primaryIndex, int length)
         {
-            string[] lines = _primary.GetRange(primaryIndex, length);
+            string[] lines = Primary.GetRange(primaryIndex, length);
             Add(Modification.CreateNoChanged(lines));
         }
 
         public void AddReplaced(int primaryIndex, int secondaryIndex, int length)
         {
-            string[] primaryLines = _primary.GetRange(primaryIndex, length);
-            string[] secondaryLines = _secondary.GetRange(secondaryIndex, length);
+            string[] primaryLines = Primary.GetRange(primaryIndex, length);
+            string[] secondaryLines = Secondary.GetRange(secondaryIndex, length);
             Add(Modification.CreateReplaced(primaryLines, secondaryLines));
         }
 
         public void AddRemoved(int primaryIndex, int length)
         {
-            string[] primaryLines = _primary.GetRange(primaryIndex, length);
+            string[] primaryLines = Primary.GetRange(primaryIndex, length);
             Add(Modification.CreateRemoved(primaryLines));
         }
 
         public void AddAdded(int secondaryIndex, int length)
         {
-            string[] secondaryLines = _secondary.GetRange(secondaryIndex, length);
+            string[] secondaryLines = Secondary.GetRange(secondaryIndex, length);
             Add(Modification.CreateAdded(secondaryLines));
+        }
+
+        public void AddMixed(IEnumerable<Modification> firstModifications, IEnumerable<Modification> secondModifications)
+        {
+            Add(Modification.CreateMixed(firstModifications, secondModifications));
         }
 
         public Modification FindModificationByPrimaryIndex(int targetPrimaryIndex)
@@ -97,5 +109,25 @@ namespace TextComparison.Modifications
                 Split(modification.Primary.StartIndex);
             }
         }
+
+        public void GenerateFiles()
+        {
+            Primary.Lines.Clear();
+            Secondary.Lines.Clear();
+
+            foreach (Modification modification in Items)
+            {
+                foreach (string line in modification.Primary.Lines)
+                {
+                    Primary.Lines.Add(new TextLine(line));
+                }
+
+                foreach (string line in modification.Secondary.Lines)
+                {
+                    Secondary.Lines.Add(new TextLine(line));
+                }
+            }
+        }
+
     }
 }

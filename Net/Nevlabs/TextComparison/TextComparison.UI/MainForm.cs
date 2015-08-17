@@ -27,8 +27,9 @@ namespace TextComparison.UI
 
         private void UpdateControls()
         {
-            compareControl1.Initialize(_merger.ServerFile, _merger.User1File, _merger.ServerUser1Modifications);
-            compareControl2.Initialize(_merger.ServerFile, _merger.User2File, _merger.ServerUser2Modifications);
+            compareControl1.Initialize(_merger.ServerUser1Modifications);
+            compareControl2.Initialize(_merger.ServerUser2Modifications);
+            compareControl3.Initialize(_merger.MergedModifications);
         }
 
         private string GetFileName()
@@ -83,6 +84,7 @@ namespace TextComparison.UI
         private void MergeButtonClick(object sender, EventArgs e)
         {
             _merger.ExecuteMerge();
+            UpdateControls();
         }
     }
 }

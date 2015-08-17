@@ -32,70 +32,30 @@ namespace TextComparison.UI
         {
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(MainForm));
             this.mergePanel = new System.Windows.Forms.Panel();
-            this.mergeListView = new System.Windows.Forms.ListView();
-            this.columnHeader5 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
-            this.columnHeader6 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
-            this.panel6 = new System.Windows.Forms.Panel();
             this.openFileDialog = new System.Windows.Forms.OpenFileDialog();
             this.compareControl1 = new TextComparison.UI.CompareControl();
             this.toolStrip1 = new System.Windows.Forms.ToolStrip();
             this.openServerButton = new System.Windows.Forms.ToolStripButton();
             this.openUser1Button = new System.Windows.Forms.ToolStripButton();
             this.openUser2Button = new System.Windows.Forms.ToolStripButton();
+            this.mergeButton = new System.Windows.Forms.ToolStripButton();
             this.splitter1 = new System.Windows.Forms.Splitter();
             this.compareControl2 = new TextComparison.UI.CompareControl();
             this.splitter2 = new System.Windows.Forms.Splitter();
-            this.mergeButton = new System.Windows.Forms.ToolStripButton();
-            this.label1 = new System.Windows.Forms.Label();
+            this.compareControl3 = new TextComparison.UI.CompareControl();
             this.mergePanel.SuspendLayout();
-            this.panel6.SuspendLayout();
             this.toolStrip1.SuspendLayout();
             this.SuspendLayout();
             // 
             // mergePanel
             // 
-            this.mergePanel.Controls.Add(this.mergeListView);
-            this.mergePanel.Controls.Add(this.panel6);
+            this.mergePanel.Controls.Add(this.compareControl3);
             this.mergePanel.Dock = System.Windows.Forms.DockStyle.Fill;
             this.mergePanel.Location = new System.Drawing.Point(0, 335);
             this.mergePanel.Name = "mergePanel";
             this.mergePanel.Size = new System.Drawing.Size(617, 148);
             this.mergePanel.TabIndex = 4;
             this.mergePanel.Resize += new System.EventHandler(this.MergePanelResize);
-            // 
-            // mergeListView
-            // 
-            this.mergeListView.Columns.AddRange(new System.Windows.Forms.ColumnHeader[] {
-            this.columnHeader5,
-            this.columnHeader6});
-            this.mergeListView.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.mergeListView.FullRowSelect = true;
-            this.mergeListView.HeaderStyle = System.Windows.Forms.ColumnHeaderStyle.Nonclickable;
-            this.mergeListView.HideSelection = false;
-            this.mergeListView.Location = new System.Drawing.Point(0, 21);
-            this.mergeListView.MultiSelect = false;
-            this.mergeListView.Name = "mergeListView";
-            this.mergeListView.Size = new System.Drawing.Size(617, 127);
-            this.mergeListView.TabIndex = 2;
-            this.mergeListView.UseCompatibleStateImageBehavior = false;
-            this.mergeListView.View = System.Windows.Forms.View.Details;
-            // 
-            // columnHeader5
-            // 
-            this.columnHeader5.Text = "#";
-            // 
-            // columnHeader6
-            // 
-            this.columnHeader6.Text = "Текст";
-            // 
-            // panel6
-            // 
-            this.panel6.Controls.Add(this.label1);
-            this.panel6.Dock = System.Windows.Forms.DockStyle.Top;
-            this.panel6.Location = new System.Drawing.Point(0, 0);
-            this.panel6.Name = "panel6";
-            this.panel6.Size = new System.Drawing.Size(617, 21);
-            this.panel6.TabIndex = 1;
             // 
             // openFileDialog
             // 
@@ -151,6 +111,16 @@ namespace TextComparison.UI
             this.openUser2Button.Text = "Open User2";
             this.openUser2Button.Click += new System.EventHandler(this.OpenUser2Click);
             // 
+            // mergeButton
+            // 
+            this.mergeButton.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Text;
+            this.mergeButton.Image = ((System.Drawing.Image)(resources.GetObject("mergeButton.Image")));
+            this.mergeButton.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.mergeButton.Name = "mergeButton";
+            this.mergeButton.Size = new System.Drawing.Size(74, 22);
+            this.mergeButton.Text = "Auto Merge";
+            this.mergeButton.Click += new System.EventHandler(this.MergeButtonClick);
+            // 
             // splitter1
             // 
             this.splitter1.Dock = System.Windows.Forms.DockStyle.Top;
@@ -179,24 +149,15 @@ namespace TextComparison.UI
             this.splitter2.TabIndex = 9;
             this.splitter2.TabStop = false;
             // 
-            // mergeButton
+            // compareControl3
             // 
-            this.mergeButton.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Text;
-            this.mergeButton.Image = ((System.Drawing.Image)(resources.GetObject("mergeButton.Image")));
-            this.mergeButton.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.mergeButton.Name = "mergeButton";
-            this.mergeButton.Size = new System.Drawing.Size(74, 22);
-            this.mergeButton.Text = "Auto Merge";
-            this.mergeButton.Click += new System.EventHandler(this.MergeButtonClick);
-            // 
-            // label1
-            // 
-            this.label1.AutoSize = true;
-            this.label1.Location = new System.Drawing.Point(3, 3);
-            this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(37, 13);
-            this.label1.TabIndex = 0;
-            this.label1.Text = "Result";
+            this.compareControl3.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.compareControl3.Location = new System.Drawing.Point(0, 0);
+            this.compareControl3.Name = "compareControl3";
+            this.compareControl3.PrimaryHeader = "Server";
+            this.compareControl3.SecondaryHeader = "Merged";
+            this.compareControl3.Size = new System.Drawing.Size(617, 148);
+            this.compareControl3.TabIndex = 9;
             // 
             // MainForm
             // 
@@ -214,8 +175,6 @@ namespace TextComparison.UI
             this.Text = "MainForm";
             this.Resize += new System.EventHandler(this.MainFormResize);
             this.mergePanel.ResumeLayout(false);
-            this.panel6.ResumeLayout(false);
-            this.panel6.PerformLayout();
             this.toolStrip1.ResumeLayout(false);
             this.toolStrip1.PerformLayout();
             this.ResumeLayout(false);
@@ -225,10 +184,6 @@ namespace TextComparison.UI
 
         #endregion
         private System.Windows.Forms.Panel mergePanel;
-        private System.Windows.Forms.ListView mergeListView;
-        private System.Windows.Forms.Panel panel6;
-        private System.Windows.Forms.ColumnHeader columnHeader5;
-        private System.Windows.Forms.ColumnHeader columnHeader6;
         private System.Windows.Forms.OpenFileDialog openFileDialog;
         private CompareControl compareControl1;
         private ToolStrip toolStrip1;
@@ -239,7 +194,7 @@ namespace TextComparison.UI
         private CompareControl compareControl2;
         private Splitter splitter2;
         private ToolStripButton mergeButton;
-        private Label label1;
+        private CompareControl compareControl3;
     }
 }
 
