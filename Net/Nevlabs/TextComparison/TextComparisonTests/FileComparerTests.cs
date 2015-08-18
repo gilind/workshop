@@ -174,7 +174,7 @@ namespace TextComparisonTests
         //}
 
         [TestMethod]
-        public void TestEmpty()//todo: переименовать
+        public void TestEmptyFiles()
         {
             TextFile emptyFile = new TextFile();
 

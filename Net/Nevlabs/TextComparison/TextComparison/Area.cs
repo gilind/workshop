@@ -5,7 +5,7 @@ namespace TextComparison
     /// <summary>
     /// Область, одновременно представленная в двух файлах - Primary и Secondary
     /// </summary>
-    public class Area// todo: хорошо бы избавиться
+    public class Area
     {
         private class SecondaryComparer : IComparer<Area>
         {
@@ -32,35 +32,5 @@ namespace TextComparison
         public int SecondaryIndex { get; }
 
         public int Length { get; set; }
-
-        private int EndIndex
-        {
-            get { return PrimaryIndex + Length; }
-        }
-
-        public bool IntersectByPrimary(Area other)//todo: удалить
-        {
-            if (PrimaryIndex == other.PrimaryIndex || 
-                PrimaryIndex == other.EndIndex ||
-                EndIndex == other.PrimaryIndex ||
-                EndIndex == other.EndIndex)
-            {
-                return true;
-            }
-
-            if (PrimaryIndex > other.PrimaryIndex && PrimaryIndex < other.EndIndex ||
-                EndIndex > other.PrimaryIndex && EndIndex < other.EndIndex)
-            {
-                return true;
-            }
-
-            if (PrimaryIndex < other.PrimaryIndex && PrimaryIndex < other.EndIndex &&
-                EndIndex > other.PrimaryIndex && EndIndex > other.EndIndex)
-            {
-                return true;
-            }
-
-            return false;
-        }
     }
 }

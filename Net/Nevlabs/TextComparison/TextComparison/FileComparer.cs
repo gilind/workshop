@@ -64,7 +64,6 @@ namespace TextComparison
         {
             Area bestMatch = null;
 
-            // todo: попробовать переделать на primary
             for (int secondaryIndex = secondaryStart; secondaryIndex <= secondaryEnd; secondaryIndex++)
             {
                 var maxPossibleSecondaryLength = secondaryEnd - secondaryIndex + 1;
