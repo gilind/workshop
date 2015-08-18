@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using TextComparison.Modifications;
 
@@ -59,16 +60,20 @@ namespace TextComparison
             ModificationCollection temporary = new ModificationCollection(ServerUser2Modifications);
             temporary.Split(MergedModifications);
 
+            ICollection<Modification> processed = new List<Modification>();
+
             for (int mergedIndex = 0; mergedIndex < MergedModifications.Count; mergedIndex++)
             {
                 Modification currentMerged = MergedModifications[mergedIndex];
 
-                Modification currentUser2 = temporary.FindModificationByPrimaryIndex(currentMerged.Primary.StartIndex);
+                Modification currentUser2 = temporary.FindModificationByPrimaryIndex(processed, currentMerged.Primary.StartIndex);
 
                 if (currentUser2 == null)
                 {
                     continue;
                 }
+
+                processed.Add(currentUser2);
 
                 Modification[] merged = currentMerged.Merge(currentUser2);
 
