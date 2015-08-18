@@ -62,16 +62,17 @@ namespace TextComparison.Modifications
             Add(Modification.CreateAdded(secondaryLines));
         }
 
-        public void AddMixed(IEnumerable<Modification> firstModifications, IEnumerable<Modification> secondModifications)
-        {
-            Add(Modification.CreateMixed(firstModifications, secondModifications));
-        }
+        //public void AddMixed(IEnumerable<Modification> firstModifications, IEnumerable<Modification> secondModifications)
+        //{
+        //    Add(Modification.CreateMixed(firstModifications, secondModifications));
+        //}
 
         public Modification FindModificationByPrimaryIndex(int targetPrimaryIndex)
         {
             foreach (Modification modification in Items)
             {
-                if (modification.Primary.StartIndex <= targetPrimaryIndex &&
+                if (targetPrimaryIndex == modification.Primary.StartIndex ||
+                    targetPrimaryIndex > modification.Primary.StartIndex &&
                     targetPrimaryIndex < modification.Primary.StartIndex + modification.Primary.Length)
                 {
                     return modification;

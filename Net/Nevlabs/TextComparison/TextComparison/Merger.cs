@@ -52,8 +52,13 @@ namespace TextComparison
             MergedModifications.Split(ServerUser2Modifications);
 
             ModificationCollection temporary = new ModificationCollection(ServerUser2Modifications);
-            MergeLargeWithSmall(temporary);
-            MergeSmallWithLarge(temporary);
+            temporary.Split(MergedModifications);
+
+            // считаем, что после этого должно быть равное количество модификаций
+
+            ТакПопробуем(temporary);
+            //MergeLargeWithSmall(temporary);
+            //MergeSmallWithLarge(temporary);
 
             MergedModifications.GenerateFiles();
 
@@ -63,118 +68,145 @@ namespace TextComparison
             }
         }
 
-        private void MergeLargeWithSmall(ModificationCollection user2Collection)
+        private void ТакПопробуем(ModificationCollection user2Collection)
         {
-            bool startMixed = false;
-            bool endMixed = false;
-
             for (int mergedIndex = 0; mergedIndex < MergedModifications.Count; mergedIndex++)
             {
                 Modification currentMerged = MergedModifications[mergedIndex];
 
-                if (currentMerged.IsNoChanged)
+                Modification currentUser2 = user2Collection.FindModificationByPrimaryIndex(currentMerged.Primary.StartIndex);
+
+                if (currentUser2 == null)
                 {
                     continue;
                 }
 
-                IList<Modification> mixed = new List<Modification>();
+                Modification[] merged = currentMerged.Merge(currentUser2);
 
-                for (int user2Index = 0; user2Index < user2Collection.Count; user2Index++)
+                currentMerged.Remove();
+
+                foreach (Modification mergedModification in merged)
                 {
-                    Modification currentUser2 = user2Collection[user2Index];
-
-                    if (currentUser2.IsNoChanged)
-                    {
-                        continue;
-                    }
-
-                    if (currentMerged.Primary.StartIndex == currentUser2.Primary.StartIndex)
-                    {
-                        startMixed = true;
-                    }
-
-                    if (startMixed)
-                    {
-                        mixed.Add(currentUser2);
-                    }
-
-                    if (startMixed &&
-                        currentMerged.Primary.StartIndex + currentMerged.Primary.Length ==
-                        currentUser2.Primary.StartIndex + currentUser2.Primary.Length)
-                    {
-                        endMixed = true;
-                        currentUser2.Remove();
-                        break;
-                    }
+                    MergedModifications.Insert(mergedIndex, mergedModification);
+                    mergedIndex++;
                 }
 
-                if (endMixed)
-                {
-                    currentMerged.Remove();
-
-                    MergedModifications.Insert(mergedIndex,Modification.CreateMixed(new List<Modification> { currentMerged }, mixed));
-                }
-
-                startMixed = false;
-                endMixed = false;
+                mergedIndex--;
             }
         }
 
-        private void MergeSmallWithLarge(ModificationCollection user2Collection)
-        {
-            bool startMixed = false;
-            bool endMixed = false;
+        //private void MergeLargeWithSmall(ModificationCollection user2Collection)
+        //{
+        //    bool startMixed = false;
+        //    bool endMixed = false;
 
-            for (int user2Index = 0; user2Index < user2Collection.Count; user2Index++)
-            {
-                Modification currentUser2 = user2Collection[user2Index];
+        //    for (int mergedIndex = 0; mergedIndex < MergedModifications.Count; mergedIndex++)
+        //    {
+        //        Modification currentMerged = MergedModifications[mergedIndex];
 
-                if (currentUser2.IsNoChanged)
-                {
-                    continue;
-                }
+        //        if (currentMerged.IsNoChanged)
+        //        {
+        //            continue;
+        //        }
 
-                IList<Modification> mixed = new List<Modification>();
+        //        IList<Modification> mixed = new List<Modification>();
 
-                for (int mergedIndex = 0; mergedIndex < MergedModifications.Count; mergedIndex++)
-                {
-                    Modification currentMerged = MergedModifications[mergedIndex];
+        //        for (int user2Index = 0; user2Index < user2Collection.Count; user2Index++)
+        //        {
+        //            Modification currentUser2 = user2Collection[user2Index];
 
-                    if (currentMerged.IsNoChanged)
-                    {
-                        continue;
-                    }
+        //            if (currentUser2.IsNoChanged)
+        //            {
+        //                continue;
+        //            }
 
-                    if (currentMerged.Primary.StartIndex == currentUser2.Primary.StartIndex)
-                    {
-                        startMixed = true;
-                    }
+        //            if (currentMerged.Primary.StartIndex == currentUser2.Primary.StartIndex)
+        //            {
+        //                startMixed = true;
+        //            }
 
-                    if (startMixed)
-                    {
-                        mixed.Add(currentMerged);
-                    }
+        //            if (startMixed)
+        //            {
+        //                mixed.Add(currentUser2);
+        //            }
 
-                    if (startMixed &&
-                        currentMerged.Primary.StartIndex + currentMerged.Primary.Length ==
-                        currentUser2.Primary.StartIndex + currentUser2.Primary.Length)
-                    {
-                        endMixed = true;
-                        currentMerged.Remove();
-                        break;
-                    }
-                }
+        //            if (startMixed &&
+        //                currentMerged.Primary.StartIndex + currentMerged.Primary.Length ==
+        //                currentUser2.Primary.StartIndex + currentUser2.Primary.Length)
+        //            {
+        //                endMixed = true;
+        //                currentUser2.Remove();
+        //                break;
+        //            }
+        //        }
 
-                if (endMixed)
-                {
-                    currentUser2.Remove();
+        //        if (endMixed)
+        //        {
+        //            currentMerged.Remove();
 
-                    MergedModifications.Insert(user2Index, Modification.CreateMixed(mixed, new List<Modification> { currentUser2 }));
-                }
+        //            MergedModifications.Insert(mergedIndex,Modification.CreateMixed(new List<Modification> { currentMerged }, mixed));
+        //        }
 
-                startMixed = false;
-                endMixed = false;
-            }
-        }
+        //        startMixed = false;
+        //        endMixed = false;
+        //    }
+        //}
+
+        //private void MergeSmallWithLarge(ModificationCollection user2Collection)
+        //{
+        //    bool startMixed = false;
+        //    bool endMixed = false;
+
+        //    for (int user2Index = 0; user2Index < user2Collection.Count; user2Index++)
+        //    {
+        //        Modification currentUser2 = user2Collection[user2Index];
+
+        //        if (currentUser2.IsNoChanged)
+        //        {
+        //            continue;
+        //        }
+
+        //        IList<Modification> mixed = new List<Modification>();
+
+        //        for (int mergedIndex = 0; mergedIndex < MergedModifications.Count; mergedIndex++)
+        //        {
+        //            Modification currentMerged = MergedModifications[mergedIndex];
+
+        //            if (currentMerged.IsNoChanged)
+        //            {
+        //                continue;
+        //            }
+
+        //            if (currentMerged.Primary.StartIndex == currentUser2.Primary.StartIndex)
+        //            {
+        //                startMixed = true;
+        //            }
+
+        //            if (startMixed)
+        //            {
+        //                mixed.Add(currentMerged);
+        //            }
+
+        //            if (startMixed &&
+        //                currentMerged.Primary.StartIndex + currentMerged.Primary.Length ==
+        //                currentUser2.Primary.StartIndex + currentUser2.Primary.Length)
+        //            {
+        //                endMixed = true;
+        //                currentMerged.Remove();
+        //                break;
+        //            }
+        //        }
+
+        //        if (endMixed)
+        //        {
+        //            currentUser2.Remove();
+
+        //            MergedModifications.Insert(user2Index, Modification.CreateMixed(mixed, new List<Modification> { currentUser2 }));
+        //        }
+
+        //        startMixed = false;
+        //        endMixed = false;
+        //    }
+        //}
     }
 }

@@ -108,6 +108,12 @@
     <Compile Include="Collections\IOwner.cs" />
     <Compile Include="Merger.cs" />
     <Compile Include="Collections\OwnedItemCollection.cs" />
+    <Compile Include="Modifications\Modification.Factory.cs" />
+    <Compile Include="Modifications\Modification.Mixed.cs" />
+    <Compile Include="Modifications\Modification.Added.cs" />
+    <Compile Include="Modifications\Modification.NoChanged.cs" />
+    <Compile Include="Modifications\Modification.Replaced.cs" />
+    <Compile Include="Modifications\Modification.Removed.cs" />
     <Compile Include="Modifications\SecondaryMixedSection.cs" />
     <Compile Include="Modifications\Modification.cs" />
     <Compile Include="Modifications\ModificationCollection.cs" />
