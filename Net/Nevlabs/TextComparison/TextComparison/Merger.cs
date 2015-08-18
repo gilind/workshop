@@ -14,7 +14,7 @@ namespace TextComparison
 
             ServerUser1Modifications = new ModificationCollection(ServerFile, User1File);
             ServerUser2Modifications = new ModificationCollection(ServerFile, User2File);
-            MergedModifications = new ModificationCollection(new TextFile(ServerFile.Name), new TextFile("Merged"));
+            MergedModifications = new ModificationCollection();
         }
 
         public TextFile ServerFile { get; }
@@ -27,7 +27,7 @@ namespace TextComparison
 
         public ModificationCollection ServerUser2Modifications { get; private set; }
 
-        public ModificationCollection MergedModifications { get; }
+        public ModificationCollection MergedModifications { get; private set; }
 
         public event EventHandler StateChanged;
 
@@ -37,6 +37,7 @@ namespace TextComparison
 
             ServerUser1Modifications = fileComparer.Compare(ServerFile, User1File);
             ServerUser2Modifications = fileComparer.Compare(ServerFile, User2File);
+            MergedModifications = new ModificationCollection();
 
             if (StateChanged != null)
             {
@@ -46,14 +47,23 @@ namespace TextComparison
 
         public void ExecuteMerge()
         {
+            MergedModifications = new ModificationCollection(new TextFile(ServerFile.Name), new TextFile("Merged"));
             MergedModifications.Initialize(ServerUser1Modifications);
             MergedModifications.Split(ServerUser2Modifications);
-            MergeLargeWithSmall();
-            MergeSmallWithLarge();
+
+            ModificationCollection temporary = new ModificationCollection(ServerUser2Modifications);
+            MergeLargeWithSmall(temporary);
+            MergeSmallWithLarge(temporary);
+
             MergedModifications.GenerateFiles();
+
+            if (StateChanged != null)
+            {
+                StateChanged(this, EventArgs.Empty);
+            }
         }
 
-        private void MergeLargeWithSmall()
+        private void MergeLargeWithSmall(ModificationCollection user2Collection)
         {
             bool startMixed = false;
             bool endMixed = false;
@@ -69,9 +79,9 @@ namespace TextComparison
 
                 IList<Modification> mixed = new List<Modification>();
 
-                for (int user2Index = 0; user2Index < ServerUser2Modifications.Count; user2Index++)
+                for (int user2Index = 0; user2Index < user2Collection.Count; user2Index++)
                 {
-                    Modification currentUser2 = ServerUser2Modifications[user2Index];
+                    Modification currentUser2 = user2Collection[user2Index];
 
                     if (currentUser2.IsNoChanged)
                     {
@@ -102,7 +112,7 @@ namespace TextComparison
                 {
                     currentMerged.Remove();
 
-                    MergedModifications.AddMixed(new List<Modification> {currentMerged}, mixed);
+                    MergedModifications.Insert(mergedIndex,Modification.CreateMixed(new List<Modification> { currentMerged }, mixed));
                 }
 
                 startMixed = false;
@@ -110,14 +120,14 @@ namespace TextComparison
             }
         }
 
-        private void MergeSmallWithLarge()
+        private void MergeSmallWithLarge(ModificationCollection user2Collection)
         {
             bool startMixed = false;
             bool endMixed = false;
 
-            for (int user2Index = 0; user2Index < ServerUser2Modifications.Count; user2Index++)
+            for (int user2Index = 0; user2Index < user2Collection.Count; user2Index++)
             {
-                Modification currentUser2 = ServerUser2Modifications[user2Index];
+                Modification currentUser2 = user2Collection[user2Index];
 
                 if (currentUser2.IsNoChanged)
                 {
@@ -159,7 +169,7 @@ namespace TextComparison
                 {
                     currentUser2.Remove();
 
-                    MergedModifications.AddMixed(mixed, new List<Modification> {currentUser2});
+                    MergedModifications.Insert(user2Index, Modification.CreateMixed(mixed, new List<Modification> { currentUser2 }));
                 }
 
                 startMixed = false;

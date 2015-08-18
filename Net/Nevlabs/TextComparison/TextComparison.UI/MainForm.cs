@@ -84,7 +84,7 @@ namespace TextComparison.UI
         private void MergeButtonClick(object sender, EventArgs e)
         {
             _merger.ExecuteMerge();
-            UpdateControls();
+            //UpdateControls();
         }
     }
 }

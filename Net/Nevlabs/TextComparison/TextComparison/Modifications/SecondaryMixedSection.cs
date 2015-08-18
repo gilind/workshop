@@ -15,7 +15,7 @@ namespace TextComparison.Modifications
             {
                 foreach (string line in firstModification.Secondary.Lines)
                 {
-                    lines.Add("first:" + line);
+                    lines.Add("User1:" + line);
                 }
             }
 
@@ -23,7 +23,7 @@ namespace TextComparison.Modifications
             {
                 foreach (string line in secondModification.Secondary.Lines)
                 {
-                    lines.Add("second:" + line);
+                    lines.Add("User2:" + line);
                 }
             }
 

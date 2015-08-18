@@ -32,6 +32,7 @@ namespace TextComparison.UI
         {
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(MainForm));
             this.mergePanel = new System.Windows.Forms.Panel();
+            this.compareControl3 = new TextComparison.UI.CompareControl();
             this.openFileDialog = new System.Windows.Forms.OpenFileDialog();
             this.compareControl1 = new TextComparison.UI.CompareControl();
             this.toolStrip1 = new System.Windows.Forms.ToolStrip();
@@ -42,7 +43,6 @@ namespace TextComparison.UI
             this.splitter1 = new System.Windows.Forms.Splitter();
             this.compareControl2 = new TextComparison.UI.CompareControl();
             this.splitter2 = new System.Windows.Forms.Splitter();
-            this.compareControl3 = new TextComparison.UI.CompareControl();
             this.mergePanel.SuspendLayout();
             this.toolStrip1.SuspendLayout();
             this.SuspendLayout();
@@ -56,6 +56,16 @@ namespace TextComparison.UI
             this.mergePanel.Size = new System.Drawing.Size(617, 148);
             this.mergePanel.TabIndex = 4;
             this.mergePanel.Resize += new System.EventHandler(this.MergePanelResize);
+            // 
+            // compareControl3
+            // 
+            this.compareControl3.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.compareControl3.Location = new System.Drawing.Point(0, 0);
+            this.compareControl3.Name = "compareControl3";
+            this.compareControl3.PrimaryHeader = "Server";
+            this.compareControl3.SecondaryHeader = "Merged";
+            this.compareControl3.Size = new System.Drawing.Size(617, 148);
+            this.compareControl3.TabIndex = 9;
             // 
             // openFileDialog
             // 
@@ -89,8 +99,8 @@ namespace TextComparison.UI
             this.openServerButton.Image = ((System.Drawing.Image)(resources.GetObject("openServerButton.Image")));
             this.openServerButton.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.openServerButton.Name = "openServerButton";
-            this.openServerButton.Size = new System.Drawing.Size(91, 22);
-            this.openServerButton.Text = "Open Server";
+            this.openServerButton.Size = new System.Drawing.Size(59, 22);
+            this.openServerButton.Text = "Server";
             this.openServerButton.Click += new System.EventHandler(this.OpenServerClick);
             // 
             // openUser1Button
@@ -98,8 +108,8 @@ namespace TextComparison.UI
             this.openUser1Button.Image = ((System.Drawing.Image)(resources.GetObject("openUser1Button.Image")));
             this.openUser1Button.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.openUser1Button.Name = "openUser1Button";
-            this.openUser1Button.Size = new System.Drawing.Size(88, 22);
-            this.openUser1Button.Text = "Open User1";
+            this.openUser1Button.Size = new System.Drawing.Size(56, 22);
+            this.openUser1Button.Text = "User1";
             this.openUser1Button.Click += new System.EventHandler(this.OpenUser1Click);
             // 
             // openUser2Button
@@ -107,8 +117,8 @@ namespace TextComparison.UI
             this.openUser2Button.Image = ((System.Drawing.Image)(resources.GetObject("openUser2Button.Image")));
             this.openUser2Button.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.openUser2Button.Name = "openUser2Button";
-            this.openUser2Button.Size = new System.Drawing.Size(88, 22);
-            this.openUser2Button.Text = "Open User2";
+            this.openUser2Button.Size = new System.Drawing.Size(56, 22);
+            this.openUser2Button.Text = "User2";
             this.openUser2Button.Click += new System.EventHandler(this.OpenUser2Click);
             // 
             // mergeButton
@@ -148,16 +158,6 @@ namespace TextComparison.UI
             this.splitter2.Size = new System.Drawing.Size(617, 3);
             this.splitter2.TabIndex = 9;
             this.splitter2.TabStop = false;
-            // 
-            // compareControl3
-            // 
-            this.compareControl3.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.compareControl3.Location = new System.Drawing.Point(0, 0);
-            this.compareControl3.Name = "compareControl3";
-            this.compareControl3.PrimaryHeader = "Server";
-            this.compareControl3.SecondaryHeader = "Merged";
-            this.compareControl3.Size = new System.Drawing.Size(617, 148);
-            this.compareControl3.TabIndex = 9;
             // 
             // MainForm
             // 

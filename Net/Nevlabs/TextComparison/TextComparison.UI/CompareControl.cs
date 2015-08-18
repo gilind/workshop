@@ -40,7 +40,7 @@ namespace TextComparison.UI
                     primaryItem.BackColor = modification.Primary.Color;
 
                     string primaryLine = string.Empty;
-                    if (index < modification.Primary.Length - 1)
+                    if (index < modification.Primary.Length)
                     {
                         primaryLine = modification.Primary.Lines[index];
                     }
@@ -52,7 +52,7 @@ namespace TextComparison.UI
                     secondaryItem.BackColor = modification.Secondary.Color;
 
                     string secondaryLine = string.Empty;
-                    if (index < modification.Secondary.Length - 1)
+                    if (index < modification.Secondary.Length)
                     {
                         secondaryLine = modification.Secondary.Lines[index];
                     }
