@@ -75,7 +75,7 @@ namespace TextComparison.UI
 
         private void MainFormResize(object sender, EventArgs e)
         {
-            int height = (ClientRectangle.Height - splitter1.Height - splitter2.Height)/3;
+            int height = (ClientRectangle.Height - splitter1.Height - splitter2.Height - toolStrip1.Height)/3;
 
             compareControl1.Height = height;
             compareControl2.Height = height;
@@ -84,7 +84,6 @@ namespace TextComparison.UI
         private void MergeButtonClick(object sender, EventArgs e)
         {
             _merger.ExecuteMerge();
-            //UpdateControls();
         }
     }
 }
