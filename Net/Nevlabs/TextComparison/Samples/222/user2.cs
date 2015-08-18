@@ -1,8 +1,12 @@
 // ==++==
 // 
 //   Copyright (c) Microsoft Corporation.  All rights reserved.
-//   2015
+// 
 // ==--==
+////////////////////////////////////////////////////////////////////////////////
+// Void
+//    This class represents a Missing Variant
+////////////////////////////////////////////////////////////////////////////////
 namespace System {
     
     using System;
@@ -13,6 +17,7 @@ namespace System {
     [Serializable]
     public sealed class DBNull : ISerializable, IConvertible {
     
+        //Package private constructor
         private DBNull(){
         }
  
@@ -20,7 +25,6 @@ namespace System {
             throw new NotSupportedException(Environment.GetResourceString("NotSupported_DBNullSerial"));
         }
         
-        // todo:
         public static readonly DBNull Value = new DBNull();
  
         [System.Security.SecurityCritical]
@@ -32,12 +36,14 @@ namespace System {
             return String.Empty;
         }
  
-        public String ToString(IFormatProvider provider) {
-            return String.Empty;
+        /// <internalonly/>
+        byte IConvertible.ToByte(IFormatProvider provider) {
+            throw new InvalidCastException(Environment.GetResourceString("InvalidCast_FromDBNull"));
         }
  
-        public TypeCode GetTypeCode() {
-            return TypeCode.DBNull;
+        /// <internalonly/>
+        short IConvertible.ToInt16(IFormatProvider provider) {
+            throw new InvalidCastException(Environment.GetResourceString("InvalidCast_FromDBNull"));
         }
     }
 }
