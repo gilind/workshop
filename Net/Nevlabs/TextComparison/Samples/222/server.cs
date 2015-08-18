@@ -35,15 +35,5 @@ namespace System {
         public override String ToString() {
             return String.Empty;
         }
- 
-        /// <internalonly/>
-        byte IConvertible.ToByte(IFormatProvider provider) {
-            throw new InvalidCastException(Environment.GetResourceString("InvalidCast_FromDBNull"));
-        }
- 
-        /// <internalonly/>
-        short IConvertible.ToInt16(IFormatProvider provider) {
-            throw new InvalidCastException(Environment.GetResourceString("InvalidCast_FromDBNull"));
-        }
     }
 }

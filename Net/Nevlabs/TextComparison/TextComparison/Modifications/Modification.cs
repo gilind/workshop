@@ -74,7 +74,7 @@ namespace TextComparison.Modifications
         {
             IList<string> firstResult = new List<string>();
 
-            for (int lineIndex = 0; lineIndex < index; lineIndex++)
+            for (int lineIndex = 0; lineIndex < Math.Min(index, lines.Count); lineIndex++)
             {
                 firstResult.Add(lines[lineIndex]);
             }

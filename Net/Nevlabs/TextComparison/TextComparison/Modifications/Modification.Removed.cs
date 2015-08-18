@@ -15,7 +15,7 @@ namespace TextComparison.Modifications
             {
                 string[] firstLines;
                 string[] secondLines;
-                SplitLines(Secondary.Lines, primaryIndex - Secondary.StartIndex, out firstLines, out secondLines);
+                SplitLines(Primary.Lines, primaryIndex - Primary.StartIndex, out firstLines, out secondLines);
 
                 return new Modification[]
                 {

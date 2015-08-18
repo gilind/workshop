@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Linq;
 using TextComparison.Modifications;
 
 namespace TextComparison
@@ -85,6 +86,26 @@ namespace TextComparison
             MergedModifications.GenerateFiles();
 
             RaiseStateChanged();
+        }
+
+        private bool IsFirstMoreSecond(ModificationCollection first, ModificationCollection second)
+        {
+            if (first.Count == 0)
+            {
+                return second.Count == 0;
+            }
+
+            if (second.Count == 0)
+            {
+                return true;
+            }
+
+            Modification firstLast = first.Last();
+
+            Modification secondLast = second.Last();
+
+            return firstLast.Secondary.StartIndex + firstLast.Secondary.Length >
+                   secondLast.Secondary.StartIndex + secondLast.Secondary.Length;
         }
     }
 }

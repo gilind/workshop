@@ -65,7 +65,7 @@ namespace TextComparison.UI
             this.compareControl3.PrimaryHeader = "Server";
             this.compareControl3.SecondaryHeader = "Merged";
             this.compareControl3.Size = new System.Drawing.Size(617, 148);
-            this.compareControl3.TabIndex = 9;
+            this.compareControl3.TabIndex = 0;
             // 
             // openFileDialog
             // 
@@ -79,7 +79,7 @@ namespace TextComparison.UI
             this.compareControl1.PrimaryHeader = "Server";
             this.compareControl1.SecondaryHeader = "User1";
             this.compareControl1.Size = new System.Drawing.Size(617, 152);
-            this.compareControl1.TabIndex = 5;
+            this.compareControl1.TabIndex = 1;
             // 
             // toolStrip1
             // 
@@ -91,7 +91,7 @@ namespace TextComparison.UI
             this.toolStrip1.Location = new System.Drawing.Point(0, 0);
             this.toolStrip1.Name = "toolStrip1";
             this.toolStrip1.Size = new System.Drawing.Size(617, 25);
-            this.toolStrip1.TabIndex = 6;
+            this.toolStrip1.TabIndex = 0;
             this.toolStrip1.Text = "toolStrip1";
             // 
             // openServerButton
@@ -148,7 +148,7 @@ namespace TextComparison.UI
             this.compareControl2.PrimaryHeader = "Server";
             this.compareControl2.SecondaryHeader = "User2";
             this.compareControl2.Size = new System.Drawing.Size(617, 152);
-            this.compareControl2.TabIndex = 8;
+            this.compareControl2.TabIndex = 2;
             // 
             // splitter2
             // 
