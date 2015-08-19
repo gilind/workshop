@@ -1,10 +1,12 @@
-//   Copyright (c) Microsoft Corporation.  All rights reserved.
-namespace System {
-    
-    public sealed class DBNull : ISerializable, IConvertible {
-    
-        public override String ToString() {
-            return "";
-        }
-    }
-}
+1
+2
+3
+4
+5
+6
+7
+8
+cc
+dd
+9
+10
