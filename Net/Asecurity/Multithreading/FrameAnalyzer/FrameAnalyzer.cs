@@ -1,4 +1,4 @@
-﻿namespace Monitoring
+﻿namespace FrameAnalyzer
 {
     public class FrameAnalyzer
     {

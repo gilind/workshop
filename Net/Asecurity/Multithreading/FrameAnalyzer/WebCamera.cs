@@ -2,7 +2,7 @@
 using System.Threading;
 using System.Threading.Tasks;
 
-namespace Monitoring
+namespace FrameAnalyzer
 {
     /// <summary>
     /// Эмуляция Web-камеры.

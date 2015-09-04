@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace Monitoring
+namespace FrameAnalyzer
 {
     /// <summary>
     /// Снимок веб-камеры, базовый класс, не может иметь экземпляров.

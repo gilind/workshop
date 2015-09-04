@@ -1,4 +1,4 @@
-﻿namespace Monitoring
+﻿namespace FrameAnalyzer
 {
     /// <summary>
     /// Объект, который необходимо найти в снимке.
