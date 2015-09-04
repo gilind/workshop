@@ -61,7 +61,10 @@ namespace Monitoring
             _cancellation.Cancel();
         }
 
-        public IList<VideoFrame> GetFrame()
+        /// <summary>
+        /// Передает очередную порцию снимков.
+        /// </summary>
+        public IList<VideoFrame> GetFrames()
         {
             // поставить генерацию на паузу
             _paused = true;
