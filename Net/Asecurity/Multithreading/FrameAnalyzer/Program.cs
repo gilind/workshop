@@ -18,14 +18,38 @@ namespace FrameAnalyzer
             int totalTime = 0;
             //int elapsedTime = 0;
 
+            IList<VideoFrame> frames = null;
+
             while (totalTime < T)
             {
-                Thread.Sleep(t);
+                Thread.Sleep(t); // todo: в реальном приложении так делать нельзя, например нужно обслуживать UI
 
-                IList<VideoFrame> frames = camera.GetFrames();
+                frames = camera.GetFrames();
 
-                totalTime = DateTime.Now.Subtract(startTime).Milliseconds;
+                totalTime = (int)DateTime.Now.Subtract(startTime).TotalMilliseconds;
+                //DateTime.Now.Subtract(startTime).Milliseconds;
             }
+
+            camera.Stop();
+
+            IList < VideoFrame > wantedFrames = new List<VideoFrame>();
+
+            if (frames != null)
+            {
+                Console.WriteLine("Total Frames: {0}", frames.Count);
+                Console.WriteLine("Wanted Frames:");
+
+                foreach (VideoFrame frame in frames)
+                {
+                    if (frame.Contain(WantedObject.SpecificObject))
+                    {
+                        wantedFrames.Add(frame);
+                        Console.WriteLine(frame);
+                    }
+                }
+            }
+
+            Console.ReadLine();
         }
     }
 }
