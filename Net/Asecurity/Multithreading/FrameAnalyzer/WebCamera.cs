@@ -47,6 +47,7 @@ namespace FrameAnalyzer
                 token.ThrowIfCancellationRequested();
 
                 _frames.Add(VideoFrame.Generate());
+                Thread.Sleep(10);
             }
         }
 

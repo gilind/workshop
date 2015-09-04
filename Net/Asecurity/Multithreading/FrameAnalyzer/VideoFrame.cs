@@ -60,7 +60,7 @@ namespace FrameAnalyzer
         /// </summary>
         public string Time
         {
-            get { return _creationDateTime.ToShortTimeString(); }
+            get { return _creationDateTime.ToLongTimeString() + "."+_creationDateTime.Millisecond; }
         }
 
         public override string ToString()
