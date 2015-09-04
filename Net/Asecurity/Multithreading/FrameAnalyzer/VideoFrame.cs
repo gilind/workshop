@@ -51,12 +51,12 @@ namespace FrameAnalyzer
         }
 
         /// <summary>
-        /// Номер снимка.
+        /// Номер (идентификатор) снимка.
         /// </summary>
         public int Id { get; }
 
         /// <summary>
-        /// Время снимка.
+        /// Время создания снимка.
         /// </summary>
         public string Time
         {

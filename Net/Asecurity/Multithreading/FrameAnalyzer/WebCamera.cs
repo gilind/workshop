@@ -21,6 +21,7 @@ namespace FrameAnalyzer
         /// </summary>
         public void Start()
         {
+            // очистить список снимков
             lock (_frames)
             {
                 _frames.Clear();
@@ -39,49 +40,30 @@ namespace FrameAnalyzer
         /// </summary>
         private void GenerateFrames(CancellationToken token)
         {
-            try
+            while (true)
             {
-                while (true)
+                // проверяем, не запрошена ли отмена операции
+                if (token.IsCancellationRequested)
                 {
-                    // если идет чтение снимков, остановить генерацию снимков
-                    //if (_paused)
-                    //{
-                    //    continue;
-                    //}
-
-                    if (token.IsCancellationRequested)
-                    {
-                        return;
-                    }
-
-                    // проверяем, не запрошена ли отмена операции
-                    //token.ThrowIfCancellationRequested();
-
-                    lock (_frames)
-                    {
-                        _frames.Add(VideoFrame.Generate());
-                    }
-                    Thread.Sleep(5);
+                    return;
                 }
-            }
-            finally
-            {
+
+                lock (_frames)
+                {
+                    _frames.Add(VideoFrame.Generate());
+                }
+
+                // уменьшить скорость генерации снимков
+                Thread.Sleep(1);
             }
         }
-
-        //private bool _paused;
 
         /// <summary>
         /// Выключение камеры.
         /// </summary>
         public void Stop()
         {
-            //try
-            //{
-                // запрашиваем отмену операции
-                _cancellation.Cancel();
-            //}
-            //finally { }
+            _cancellation.Cancel();
         }
 
         /// <summary>
@@ -89,20 +71,15 @@ namespace FrameAnalyzer
         /// </summary>
         public IList<VideoFrame> GetFrames()
         {
-            // поставить генерацию на паузу
-            //_paused = true;
+            List<VideoFrame> result = new List<VideoFrame>();
+
             lock (_frames)
             {
-
-                List<VideoFrame> result = new List<VideoFrame>();
-
                 result.AddRange(_frames);
                 _frames.Clear();
-
-                // продолжить генерацию
-                //_paused = false;
-                return result;
             }
+
+            return result;
         }
     }
 }
