@@ -5,85 +5,77 @@ using FileSystem.Core.Exceptions;
 
 namespace FileSystem.Core.Parsing.ConcreteClasses
 {
-	internal class CommandParser : ICommandParser
-	{
-		public CommandParser()
-		{
-			Reset();
-		}
+    internal class CommandParser : ICommandParser
+    {
+        private CommandTypes _commandType;
+        private IPathInfo[] _operands;
 
+        public CommandParser()
+        {
+            Reset();
+        }
 
-		private CommandTypes _commandType;
-		private IPathInfo[] _operands;
+        public CommandTypes CommandType
+        {
+            get { return _commandType; }
+        }
 
+        public IPathInfo[] Operands
+        {
+            get { return _operands; }
+        }
 
-		public CommandTypes CommandType
-		{
-			get { return _commandType; }
-		}
+        public void Parse(string commandLine)
+        {
+            Reset();
 
+            if (commandLine == null || (commandLine = commandLine.Trim()) == string.Empty)
+                return;
 
-		public IPathInfo[] Operands
-		{
-			get { return _operands; }
-		}
+            string[] substrings = Split(commandLine);
+            if (substrings.Length == 0)
+                return;
 
+            ParseCommandType(substrings);
+            ParseOperands(substrings);
+        }
 
-		private void Reset()
-		{
-			_commandType = CommandTypes.NOP;
-			_operands = new PathInfo[0];
-		}
+        private void Reset()
+        {
+            _commandType = CommandTypes.NOP;
+            _operands = new PathInfo[0];
+        }
 
+        private static string[] Split(string commandLine)
+        {
+            Regex regex = new Regex(@" +");
+            return regex.Split(commandLine);
+        }
 
-		public void Parse( string commandLine )
-		{
-			Reset();
+        private void ParseCommandType(string[] substrings)
+        {
+            string commandName = substrings[0];
 
-			if ( commandLine == null || ( commandLine = commandLine.Trim() ) == string.Empty )
-				return;
+            try
+            {
+                _commandType = (CommandTypes) Enum.Parse(typeof (CommandTypes), commandName, true);
+            }
+            catch (Exception)
+            {
+                throw new UnknownCommandException(commandName);
+            }
+        }
 
-			string[] substrings = Split( commandLine );
-			if ( substrings.Length == 0 )
-				return;
+        private void ParseOperands(string[] strings)
+        {
+            if (strings == null || strings.Length < 2)
+                return;
 
-			ParseCommandType( substrings );
-			ParseOperands( substrings );
-		}
+            IPathInfo[] operands = new PathInfo[strings.Length - 1];
+            for (int operandIndex = 0; operandIndex < operands.Length; operandIndex++)
+                operands[operandIndex] = new PathInfo(strings[operandIndex + 1]);
 
-
-		private static string[] Split( string commandLine )
-		{
-			Regex regex = new Regex( @" +" );
-			return regex.Split( commandLine );
-		}
-
-
-		private void ParseCommandType( string[] substrings )
-		{
-			string commandName = substrings[ 0 ];
-
-			try
-			{
-				_commandType = (CommandTypes) Enum.Parse( typeof ( CommandTypes ), commandName, true );
-			}
-			catch ( Exception )
-			{
-				throw new UnknownCommandException( commandName );
-			}
-		}
-
-
-		private void ParseOperands( string[] strings )
-		{
-			if ( strings == null || strings.Length < 2 )
-				return;
-
-			IPathInfo[] operands = new PathInfo[strings.Length - 1];
-			for ( int operandIndex = 0; operandIndex < operands.Length; operandIndex++ )
-				operands[ operandIndex ] = new PathInfo( strings[ operandIndex + 1 ] );
-
-			_operands = operands;
-		}
-	}
+            _operands = operands;
+        }
+    }
 }

@@ -10,156 +10,139 @@ using FileSystem.Core.Parsing.ConcreteClasses;
 
 namespace FileSystem.Core
 {
-	public class PrintedEventArgs : EventArgs
-	{
-		private readonly string _text;
+    public class PrintedEventArgs : EventArgs
+    {
+        private readonly string _text;
+
+        internal PrintedEventArgs(string text)
+        {
+            _text = text;
+        }
+
+        public string Text
+        {
+            get { return _text; }
+        }
+    }
 
 
-		internal PrintedEventArgs( string text )
-		{
-			_text = text;
-		}
+    public delegate void PrintedEventHandler(object sender, PrintedEventArgs args);
 
 
-		public string Text
-		{
-			get { return _text; }
-		}
-	}
+    public class FileManager
+    {
+        public const string DriveName = "C:";
+        private ICommandParser _commandParser;
+        private IElement _currentDirectory;
+        private IElement _root;
+        private IStringConverter _stringConverter;
 
+        public FileManager()
+        {
+            SetParser(DefaultCommandParser);
+            SetConverter(DefaultStringConverter);
+            Reset();
+        }
 
-	public delegate void PrintedEventHandler( object sender, PrintedEventArgs args );
+        internal ICommandParser Parser
+        {
+            get { return _commandParser; }
+        }
 
-
-	public class FileManager
-	{
-		public const string DriveName = "C:";
-
-
-		public FileManager()
-		{
-			SetParser( DefaultCommandParser );
-			SetConverter( DefaultStringConverter );
-			Reset();
-		}
-
-
-		private ICommandParser _commandParser = null;
-		private IStringConverter _stringConverter = null;
-		private IElement _root = null;
-		private IElement _currentDirectory = null;
-
-
-		public event PrintedEventHandler Printed;
-
-
-		internal void OnPrinted( string text )
-		{
-			if ( Printed != null )
-				Printed( this, new PrintedEventArgs( text ) );
-		}
-
-
-		internal ICommandParser Parser
-		{
-			get { return _commandParser; }
-		}
-
-
-		private IStringConverter Converter
-		{
-			get { return _stringConverter; }
-		}
-
-
-		public void Reset()
-		{
-			_root = ElementFactory.CreateRoot();
-			CurrentDirectory = _root;
-		}
+        private IStringConverter Converter
+        {
+            get { return _stringConverter; }
+        }
 
 #if UNIT
-	public
+        public
 #else
         internal
 #endif
-        void SetParser( ICommandParser commandParser )
-		{
-			_commandParser = commandParser;
-		}
+            static ICommandParser DefaultCommandParser
+        {
+            get { return new CommandParser(); }
+        }
 
-
-		public void SetConverter( IStringConverter stringConverter )
-		{
-			_stringConverter = stringConverter;
-		}
-
-
-		public void ExecuteCommand( string commandString )
-		{
-			ICommand command = CommandFactory.CreateCommand( this, commandString );
-			command.Execute();
-		}
-
-
-		public void ExecuteBatch( StringCollection commandStrings )
-		{
-			foreach ( string commandString in commandStrings )
-			{
-				try
-				{
-					ExecuteCommand( commandString );
-				}
-				catch ( BusinessException ex )
-				{
-					OnPrinted( ex.Message + Environment.NewLine );
-				}
-			}
-		}
+        public static IStringConverter DefaultStringConverter
+        {
+            get { return new StringConverter(); }
+        }
 
 #if UNIT
-	public
+        public
 #else
         internal
 #endif
-        static ICommandParser DefaultCommandParser
-		{
-			get { return new CommandParser(); }
-		}
-
-
-		public static IStringConverter DefaultStringConverter
-		{
-			get { return new StringConverter(); }
-		}
-
+            IElement Root
+        {
+            get { return _root; }
+        }
 
 #if UNIT
-		public
+        public
 #else
         internal
 #endif
-			IElement Root
-		{
-			get { return _root; }
-		}
+            IElement CurrentDirectory
+        {
+            get { return _currentDirectory; }
+            set { _currentDirectory = value; }
+        }
 
+        public event PrintedEventHandler Printed;
+
+        internal void OnPrinted(string text)
+        {
+            if (Printed != null)
+                Printed(this, new PrintedEventArgs(text));
+        }
+
+        public void Reset()
+        {
+            _root = ElementFactory.CreateRoot();
+            CurrentDirectory = _root;
+        }
 
 #if UNIT
-		public
+        public
 #else
         internal
 #endif
-			IElement CurrentDirectory
-		{
-			get { return _currentDirectory; }
-			set { _currentDirectory = value; }
-		}
+            void SetParser(ICommandParser commandParser)
+        {
+            _commandParser = commandParser;
+        }
 
+        public void SetConverter(IStringConverter stringConverter)
+        {
+            _stringConverter = stringConverter;
+        }
 
-		public override string ToString()
-		{
-			return Converter.Convert( this );
-		}
-	}
+        public void ExecuteCommand(string commandString)
+        {
+            ICommand command = CommandFactory.CreateCommand(this, commandString);
+            command.Execute();
+        }
+
+        public void ExecuteBatch(StringCollection commandStrings)
+        {
+            foreach (string commandString in commandStrings)
+            {
+                try
+                {
+                    ExecuteCommand(commandString);
+                }
+                catch (BusinessException ex)
+                {
+                    OnPrinted(ex.Message + Environment.NewLine);
+                }
+            }
+        }
+
+        public override string ToString()
+        {
+            return Converter.Convert(this);
+        }
+    }
 }

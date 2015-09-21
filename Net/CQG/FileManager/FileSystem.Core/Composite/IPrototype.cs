@@ -1,12 +1,12 @@
 namespace FileSystem.Core.Composite
 {
 #if UNIT
-	public
+    public
 #else
     internal
 #endif
-		interface IPrototype
-	{
-		IElement Clone();
-	}
+        interface IPrototype
+    {
+        IElement Clone();
+    }
 }

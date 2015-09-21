@@ -2,13 +2,12 @@ using FileSystem.Core.Parsing;
 
 namespace FileSystem.Core.Commands
 {
-	public interface ICommand
-	{
-		void Execute();
-		IPathInfo[] Operands { get; }
-
+    public interface ICommand
+    {
+        IPathInfo[] Operands { get; }
 #if UNIT
-		CommandTypes CommandType { get; }
+        CommandTypes CommandType { get; }
 #endif
-	}
+        void Execute();
+    }
 }

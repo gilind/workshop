@@ -3,15 +3,15 @@ using FileSystem.Core.Commands;
 namespace FileSystem.Core.Parsing
 {
 #if UNIT
-	public
+    public
 #else
     internal
 #endif
-    interface ICommandParser
-	{
-		void Parse( string line );
+        interface ICommandParser
+    {
+        void Parse(string line);
 
-		CommandTypes CommandType { get; }
-		IPathInfo[] Operands { get; }
-	}
+        CommandTypes CommandType { get; }
+        IPathInfo[] Operands { get; }
+    }
 }
