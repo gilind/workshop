@@ -78,8 +78,12 @@ namespace FileSystem.Core
 			CurrentDirectory = _root;
 		}
 
-
-		public void SetParser( ICommandParser commandParser )
+#if UNIT
+	public
+#else
+        internal
+#endif
+        void SetParser( ICommandParser commandParser )
 		{
 			_commandParser = commandParser;
 		}
@@ -113,8 +117,12 @@ namespace FileSystem.Core
 			}
 		}
 
-
-		public static ICommandParser DefaultCommandParser
+#if UNIT
+	public
+#else
+        internal
+#endif
+        static ICommandParser DefaultCommandParser
 		{
 			get { return new CommandParser(); }
 		}

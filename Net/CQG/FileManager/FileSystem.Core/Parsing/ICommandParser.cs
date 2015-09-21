@@ -2,7 +2,12 @@ using FileSystem.Core.Commands;
 
 namespace FileSystem.Core.Parsing
 {
-	public interface ICommandParser
+#if UNIT
+	public
+#else
+    internal
+#endif
+    interface ICommandParser
 	{
 		void Parse( string line );
 
