@@ -1,12 +1,12 @@
 using System;
 using FileSystem.Core;
 using FileSystem.Core.Exceptions;
-using NUnit.Framework;
+using Microsoft.VisualStudio.TestTools.UnitTesting;
 
 namespace FileSystem.Testing
 {
-	[ TestFixture ]
-	public class BusinessTests
+    [TestClass]
+    public class BusinessTests
 	{
 		public BusinessTests()
 		{
@@ -23,15 +23,15 @@ namespace FileSystem.Testing
 		}
 
 
-		[ SetUp ]
-		public void SetUp()
+        [TestInitialize]
+        public void SetUp()
 		{
 			Manager.Reset();
 		}
 
 
 		// Initially file system contains only the root directory marked as "C:"
-		[ Test ]
+		[TestMethod]
 		public void Test_ExistsTheRoot()
 		{
 			Manager.Reset();
@@ -44,7 +44,7 @@ namespace FileSystem.Testing
 
 		// MD - Creates Directory
 		// a. MD C:\Test – creates a directory called Test\ in the root directory.
-		[ Test ]
+		[TestMethod]
 		public void Test_CreateDirectoryInTheRoot()
 		{
 			Manager.ExecuteCommand( @"MD C:\Test" );
@@ -53,7 +53,7 @@ namespace FileSystem.Testing
 
 
 		// b. MD Test – creates a subdirectory called Test\ in the current directory
-		[ Test ]
+		[TestMethod]
 		public void Test_CreateDirectoryInCurrentDirectory()
 		{
 			Assert.AreEqual( Manager.CurrentDirectory.Name, "C:" );
@@ -63,7 +63,7 @@ namespace FileSystem.Testing
 
 
 		// c. MD C:\Dir1\Dir2\NewDir – creates a subdirectory "NewDir" if directory "C:\Dir1\Dir2" exists.
-		[ Test ]
+		[TestMethod]
 		public void Test_CreateSubdirectory()
 		{
 			Manager.ExecuteCommand( @"MD c:\Dir1" );
@@ -74,7 +74,7 @@ namespace FileSystem.Testing
 
 
 		// d. MD should not create any intermediate directories in the path
-		[ Test ]
+		[TestMethod]
 		[ ExpectedException( typeof ( InvalidPathException ) ) ]
 		public void Test_NotCreateIntermediateDirectories()
 		{
@@ -82,7 +82,7 @@ namespace FileSystem.Testing
 		}
 
 
-		[ Test ]
+		[TestMethod]
 		[ ExpectedException( typeof ( InvalidPathException ) ) ]
 		public void Test_NotCreateRootDirectory()
 		{
@@ -90,7 +90,7 @@ namespace FileSystem.Testing
 		}
 
 
-		[ Test ]
+		[TestMethod]
 		public void Test_ValidDirectoryName()
 		{
 			Manager.ExecuteCommand( @"MD abcd1234" );
@@ -98,7 +98,7 @@ namespace FileSystem.Testing
 		}
 
 
-		[ Test ]
+		[TestMethod]
 		[ ExpectedException( typeof ( InvalidNameException ) ) ]
 		public void Test_InvalidDirectoryName()
 		{
@@ -106,7 +106,7 @@ namespace FileSystem.Testing
 		}
 
 
-		[ Test ]
+		[TestMethod]
 		[ ExpectedException( typeof ( InvalidNameException ) ) ]
 		public void Test_InvalidDirectoryName2()
 		{
@@ -114,7 +114,7 @@ namespace FileSystem.Testing
 		}
 
 
-		[ Test ]
+		[TestMethod]
 		[ ExpectedException( typeof ( InvalidNameException ) ) ]
 		public void Test_InvalidDirectoryName3()
 		{
@@ -123,7 +123,7 @@ namespace FileSystem.Testing
 		}
 
 
-		[ Test ]
+		[TestMethod]
 		[ ExpectedException( typeof ( ElementAlreadyExistsException ) ) ]
 		public void Test_CreateExistingDirectory()
 		{
@@ -138,7 +138,7 @@ namespace FileSystem.Testing
 
 		// CD – changes the current directory.
 		// a. CD C: – set root as the current directory.
-		[ Test ]
+		[TestMethod]
 		public void Test_SetRootAsTheCurrentDirectory()
 		{
 			Manager.ExecuteCommand( @"CD c:" );
@@ -147,7 +147,7 @@ namespace FileSystem.Testing
 
 
 		// b. CD C:\Dir1 – set "C:\Dir1" as the current directory.
-		[ Test ]
+		[TestMethod]
 		public void Test_SetDirectoryAsTheCurrentDirectory()
 		{
 			Manager.ExecuteCommand( @"MD C:\Dir1" );
@@ -159,7 +159,7 @@ namespace FileSystem.Testing
 
 
 		// c. CD Dir1 – set Dir1 subdirectory of the current directory as new current directory.
-		[ Test ]
+		[TestMethod]
 		public void Test_SetSubdirectoryOfTheCurrentDirectoryAsNewCurrentDirectory()
 		{
 			Manager.ExecuteCommand( @"MD C:\Dir1" );
@@ -172,7 +172,7 @@ namespace FileSystem.Testing
 
 
 		// d. Using CD without parameters is not allowed.
-		[ Test ]
+		[TestMethod]
 		[ ExpectedException( typeof ( CommandFormatException ) ) ]
 		public void Test_ChangeCurrentDirectoryWithoutParameters()
 		{
@@ -195,7 +195,7 @@ namespace FileSystem.Testing
 
 		// RD – removes a directory if it is empty( doesn ’t contain any files or subdirectories ).
 		// a. 
-		[ Test ]
+		[TestMethod]
 		public void Test_RemoveSubdirectory()
 		{
 			Manager.ExecuteCommand( @"MD C:\Dir1" );
@@ -207,7 +207,7 @@ namespace FileSystem.Testing
 
 
 		// b.
-		[ Test ]
+		[TestMethod]
 		[ ExpectedException( typeof ( RemoveImpossibleException ) ) ]
 		public void Test_RemoveNotEmptySubdirectory()
 		{
@@ -220,7 +220,7 @@ namespace FileSystem.Testing
 
 
 		// c.
-		[ Test ]
+		[TestMethod]
 		[ ExpectedException( typeof ( RemoveImpossibleException ) ) ]
 		public void Test_RemoveCurrentDirectory()
 		{
@@ -232,7 +232,7 @@ namespace FileSystem.Testing
 		}
 
 
-		[ Test ]
+		[TestMethod]
 		[ ExpectedException( typeof ( RemoveImpossibleException ) ) ]
 		public void Test_RemoveRoot()
 		{
@@ -240,7 +240,7 @@ namespace FileSystem.Testing
 		}
 
 
-		[ Test ]
+		[TestMethod]
 		[ ExpectedException( typeof ( RemoveImpossibleException ) ) ]
 		public void Test_RemoveFile()
 		{
@@ -258,7 +258,7 @@ namespace FileSystem.Testing
 
 		// DELTREE – removes a directory with all its subdirectories.
 
-		[ Test ]
+		[TestMethod]
 		public void Test_DeltreeDirectoryWithSubdirectories()
 		{
 			Manager.ExecuteCommand( @"MD C:\Dir1" );
@@ -271,7 +271,7 @@ namespace FileSystem.Testing
 		}
 
 
-		[ Test ]
+		[TestMethod]
 		[ ExpectedException( typeof ( RemoveImpossibleException ) ) ]
 		public void Test_DeltreeDirectoryContainsCurrentDirectoryAsSubdirectory()
 		{
@@ -286,7 +286,7 @@ namespace FileSystem.Testing
 		}
 
 
-		[ Test ]
+		[TestMethod]
 		[ ExpectedException( typeof ( ElementIsLockedException ) ) ]
 		public void Test_DeltreeDirectoryWithNestedHardLinkedSubdirectory()
 		{
@@ -299,7 +299,7 @@ namespace FileSystem.Testing
 
 
 		// One can not delete a file which has an attached hard link but can delete a dynamic link.
-		[ Test ]
+		[TestMethod]
 		[ ExpectedException( typeof ( ElementIsLockedException ) ) ]
 		public void Test_DeltreeDirectoryWithNestedHardLinkedFile()
 		{
@@ -314,7 +314,7 @@ namespace FileSystem.Testing
 
 		// When a file is deleted its all dynamic links are also should be deleted. If a file has both hard and
 		// dynamic links FME should keep them all unchanged.
-		[ Test ]
+		[TestMethod]
 		public void Test_DeltreeDirectoryWithNestedDynamicLinkedSubdirectory()
 		{
 			Manager.ExecuteCommand( @"MD C:\Dir1" );
@@ -334,7 +334,7 @@ namespace FileSystem.Testing
 
 		// MF – creates a file.
 
-		[ Test ]
+		[TestMethod]
 		public void Test_CreateFileInDirectory()
 		{
 			Manager.ExecuteCommand( @"MD C:\Dir1" );
@@ -343,7 +343,7 @@ namespace FileSystem.Testing
 		}
 
 
-		[ Test ]
+		[TestMethod]
 		public void Test_CreateFileInCurrentDirectory()
 		{
 			Manager.ExecuteCommand( @"MD C:\Dir1" );
@@ -353,7 +353,7 @@ namespace FileSystem.Testing
 		}
 
 
-		[ Test ]
+		[TestMethod]
 		[ ExpectedException( typeof ( ElementAlreadyExistsException ) ) ]
 		public void Test_CreateExistingFile()
 		{
@@ -368,7 +368,7 @@ namespace FileSystem.Testing
 		//b. File extension shall not exceed 3 characters length.
 		//c. Only alphabetical [a…z] and numerical [0…9] characters allowed in the file or directory
 		//   names and extensions.
-		[ Test ]
+		[TestMethod]
 		public void Test_ValidFileName()
 		{
 			Manager.ExecuteCommand( @"MF abcd1234.123" );
@@ -385,7 +385,7 @@ namespace FileSystem.Testing
 		}
 
 
-		[ Test ]
+		[TestMethod]
 		[ ExpectedException( typeof ( InvalidNameException ) ) ]
 		public void Test_InvalidFileName()
 		{
@@ -393,7 +393,7 @@ namespace FileSystem.Testing
 		}
 
 
-		[ Test ]
+		[TestMethod]
 		[ ExpectedException( typeof ( InvalidNameException ) ) ]
 		public void Test_InvalidFileName2()
 		{
@@ -401,7 +401,7 @@ namespace FileSystem.Testing
 		}
 
 
-		[ Test ]
+		[TestMethod]
 		[ ExpectedException( typeof ( InvalidNameException ) ) ]
 		public void Test_InvalidFileName3()
 		{
@@ -409,7 +409,7 @@ namespace FileSystem.Testing
 		}
 
 
-		[ Test ]
+		[TestMethod]
 		[ ExpectedException( typeof ( InvalidPathException ) ) ]
 		public void Test_InvalidPathOfFile()
 		{
@@ -423,7 +423,7 @@ namespace FileSystem.Testing
 
 		// MHL – creates a hard link to a file/directory and places it in given location.
 		// creates a hard link to a file/directory
-		[ Test ]
+		[TestMethod]
 		public void Test_CreateHardLink()
 		{
 			Manager.ExecuteCommand( @"MD dir1" );
@@ -433,7 +433,7 @@ namespace FileSystem.Testing
 
 
 		// If such link already exists then FME should continue to the next command in the batch file without any error rising.
-		[ Test ]
+		[TestMethod]
 		//[ExpectedException( typeof ( ElementAlreadyExistsException ) )]
 		public void Test_CreateExistingHardLink()
 		{
@@ -444,7 +444,7 @@ namespace FileSystem.Testing
 
 
 		// The output format for hard links should be the following: hlink[ full path ]
-		[ Test ]
+		[TestMethod]
 		public void Test_HardLinkName()
 		{
 			Manager.ExecuteCommand( @"MD dir1" );
@@ -456,7 +456,7 @@ namespace FileSystem.Testing
 		}
 
 
-		[ Test ]
+		[TestMethod]
 		public void Test_ExpandHardLinkContent()
 		{
 			Manager.ExecuteCommand( @"MD dir1" );
@@ -469,7 +469,7 @@ namespace FileSystem.Testing
 
 
 		// It is not allowed to create links to links.
-		[ Test ]
+		[TestMethod]
 		[ ExpectedException( typeof ( UnableCreateLinkException ) ) ]
 		public void Test_CreateHardLinkToLink()
 		{
@@ -482,7 +482,7 @@ namespace FileSystem.Testing
 		}
 
 
-		[ Test ]
+		[TestMethod]
 		[ ExpectedException( typeof ( RecursiveLinkException ) ) ]
 		public void Test_CreateRecursiveHardLink()
 		{
@@ -498,7 +498,7 @@ namespace FileSystem.Testing
 
 		// MDL– creates a dynamic link to a file/directory and places it in given location.
 		// creates a dynamic link to a file/directory
-		[ Test ]
+		[TestMethod]
 		public void Test_CreateDynamicLink()
 		{
 			Manager.ExecuteCommand( @"MD dir1" );
@@ -508,7 +508,7 @@ namespace FileSystem.Testing
 
 
 		// If such link already exists then FME should continue to the next command in the batch file without any error rising.
-		[ Test ]
+		[TestMethod]
 		//[ExpectedException( typeof ( ElementAlreadyExistsException ) )]
 		public void Test_CreateExistingDynamicLink()
 		{
@@ -519,7 +519,7 @@ namespace FileSystem.Testing
 
 
 		// The output format for dynamic links should be the following: dlink[ full path ]
-		[ Test ]
+		[TestMethod]
 		public void Test_DynamicLinkName()
 		{
 			Manager.ExecuteCommand( @"MD dir1" );
@@ -531,7 +531,7 @@ namespace FileSystem.Testing
 		}
 
 
-		[ Test ]
+		[TestMethod]
 		public void Test_ExpandDynamicLinkContent()
 		{
 			Manager.ExecuteCommand( @"MD dir1" );
@@ -544,7 +544,7 @@ namespace FileSystem.Testing
 
 
 		// It is not allowed to create links to links.
-		[ Test ]
+		[TestMethod]
 		[ ExpectedException( typeof ( UnableCreateLinkException ) ) ]
 		public void Test_CreateDynamicLinkToLink()
 		{
@@ -557,7 +557,7 @@ namespace FileSystem.Testing
 		}
 
 
-		[ Test ]
+		[TestMethod]
 		[ ExpectedException( typeof ( RecursiveLinkException ) ) ]
 		public void Test_CreateRecursiveDynamicLink()
 		{
@@ -573,7 +573,7 @@ namespace FileSystem.Testing
 
 		// DEL – removes a file or link.
 
-		[ Test ]
+		[TestMethod]
 		public void Test_DeleteFile()
 		{
 			Manager.ExecuteCommand( @"MD C:\Dir1" );
@@ -585,7 +585,7 @@ namespace FileSystem.Testing
 		}
 
 
-		[ Test ]
+		[TestMethod]
 		public void Test_DeleteHardLink()
 		{
 			Manager.ExecuteCommand( @"MD dir1" );
@@ -597,7 +597,7 @@ namespace FileSystem.Testing
 		}
 
 
-		[ Test ]
+		[TestMethod]
 		public void Test_DeleteDynamicLink()
 		{
 			Manager.ExecuteCommand( @"MD dir1" );
@@ -609,7 +609,7 @@ namespace FileSystem.Testing
 		}
 
 
-		[ Test ]
+		[TestMethod]
 		[ ExpectedException( typeof ( ElementIsLockedException ) ) ]
 		public void Test_DeleteHardLinkedFile()
 		{
@@ -622,7 +622,7 @@ namespace FileSystem.Testing
 		}
 
 
-		[ Test ]
+		[TestMethod]
 		public void Test_DeleteHardLinkedFile2()
 		{
 			Manager.ExecuteCommand( @"MD dir1" );
@@ -635,7 +635,7 @@ namespace FileSystem.Testing
 		}
 
 
-		[ Test ]
+		[TestMethod]
 		public void Test_DeleteDynamicLinkedFileTogetherDynamicLinks()
 		{
 			Manager.ExecuteCommand( @"MD dir1" );
@@ -656,7 +656,7 @@ namespace FileSystem.Testing
 		}
 
 
-		[ Test ]
+		[TestMethod]
 		[ ExpectedException( typeof ( RemoveImpossibleException ) ) ]
 		public void Test_DeleteDirectory()
 		{
@@ -674,7 +674,7 @@ namespace FileSystem.Testing
 		// COPY – copy an existed directory/file/link to another location.
 
 		// Program should copy directory with all its content.
-		[ Test ]
+		[TestMethod]
 		public void Test_CopyDirectory()
 		{
 			Manager.ExecuteCommand( @"MD dir1" );
@@ -689,7 +689,7 @@ namespace FileSystem.Testing
 		}
 
 
-		[ Test ]
+		[TestMethod]
 		public void Test_CopyFileFromCurrentDirectory()
 		{
 			Manager.ExecuteCommand( @"MD dir1" );
@@ -703,7 +703,7 @@ namespace FileSystem.Testing
 		}
 
 
-		[ Test ]
+		[TestMethod]
 		[ ExpectedException( typeof ( InvalidPathException ) ) ]
 		public void Test_CopyFileToNotExistsDestination()
 		{
@@ -715,7 +715,7 @@ namespace FileSystem.Testing
 		}
 
 
-		[ Test ]
+		[TestMethod]
 		[ ExpectedException( typeof ( ElementAlreadyExistsException ) ) ]
 		public void Test_CopyFileToDirectoryAlreadyContainThisFileName()
 		{
@@ -730,7 +730,7 @@ namespace FileSystem.Testing
 
 
 		// Destination path should not contain any file name otherwise FME should raise error.
-		[ Test ]
+		[TestMethod]
 		[ ExpectedException( typeof ( ElementIsNotContainerException ) ) ]
 		public void Test_CopyToFile()
 		{
@@ -743,7 +743,7 @@ namespace FileSystem.Testing
 		}
 
 
-		[ Test ]
+		[TestMethod]
 		public void Test_CopyLinks()
 		{
 			Manager.ExecuteCommand( @"MD dir1" );
@@ -763,7 +763,7 @@ namespace FileSystem.Testing
 		}
 
 
-		[ Test ]
+		[TestMethod]
 		public void Test_CopyToLink()
 		{
 			Manager.ExecuteCommand( @"MF file.txt" );
@@ -775,7 +775,7 @@ namespace FileSystem.Testing
 		}
 
 
-		[ Test ]
+		[TestMethod]
 		[ ExpectedException( typeof ( CopyImpossibleException ) ) ]
 		public void Test_CopyRootToDirectory()
 		{
@@ -789,7 +789,7 @@ namespace FileSystem.Testing
 		#region MOVE
 
 		// MOVE – move an existing directory/file/link to another location
-		[ Test ]
+		[TestMethod]
 		public void Test_MoveDirectory()
 		{
 			Manager.ExecuteCommand( @"MD dir1" );
@@ -805,7 +805,7 @@ namespace FileSystem.Testing
 		}
 
 
-		[ Test ]
+		[TestMethod]
 		public void Test_MoveFile()
 		{
 			Manager.ExecuteCommand( @"MD dir1" );
@@ -818,7 +818,7 @@ namespace FileSystem.Testing
 		}
 
 
-		[ Test ]
+		[TestMethod]
 		[ ExpectedException( typeof ( ElementIsNotContainerException ) ) ]
 		public void Test_MoveFileToFile()
 		{
@@ -828,7 +828,7 @@ namespace FileSystem.Testing
 		}
 
 
-		[ Test ]
+		[TestMethod]
 		[ ExpectedException( typeof ( RemoveImpossibleException ) ) ]
 		public void Test_MoveCurrentDirectory()
 		{
@@ -843,7 +843,7 @@ namespace FileSystem.Testing
 		}
 
 
-		[ Test ]
+		[TestMethod]
 		[ ExpectedException( typeof ( RemoveImpossibleException ) ) ]
 		public void Test_MoveNestedCurrentDirectory()
 		{
@@ -858,7 +858,7 @@ namespace FileSystem.Testing
 		}
 
 
-		[ Test ]
+		[TestMethod]
 		public void Test_MoveHardLink()
 		{
 			Manager.ExecuteCommand( @"MD dir1" );
@@ -873,7 +873,7 @@ namespace FileSystem.Testing
 		}
 
 
-		[ Test ]
+		[TestMethod]
 		public void Test_MoveDynamicLink()
 		{
 			Manager.ExecuteCommand( @"MD dir1" );
@@ -889,7 +889,7 @@ namespace FileSystem.Testing
 
 
 		// In case when a file or directory which is being moved has a hard link, FME should terminate the MOVE operation and batch file execution.
-		[ Test ]
+		[TestMethod]
 		[ ExpectedException( typeof ( ElementIsLockedException ) ) ]
 		public void Test_MoveHardLinkedFile()
 		{
@@ -903,7 +903,7 @@ namespace FileSystem.Testing
 		}
 
 
-		[ Test ]
+		[TestMethod]
 		[ ExpectedException( typeof ( ElementIsLockedException ) ) ]
 		public void Test_MoveDirectoryWithHardLinkedContent()
 		{
@@ -937,7 +937,7 @@ namespace FileSystem.Testing
 
 
 		// In case when any dynamic link(s) found and no hard link exists, then dynamic link(s) should be modified and contain new location information instead of the old one
-		[ Test ]
+		[TestMethod]
 		public void Test_MoveDirectoryWithDynamicLinkAndModifiedDynamicLink()
 		{
 			Manager.ExecuteCommand( @"MD dir1" );
@@ -992,7 +992,7 @@ namespace FileSystem.Testing
 		}
 
 
-		[ Test ]
+		[TestMethod]
 		[ ExpectedException( typeof ( RemoveImpossibleException ) ) ]
 		public void Test_MoveRoot()
 		{
@@ -1001,7 +1001,7 @@ namespace FileSystem.Testing
 		}
 
 
-		[ Test ]
+		[TestMethod]
 		[ ExpectedException( typeof ( RemoveImpossibleException ) ) ]
 		public void Test_MoveDirectoryToNestedDirectory()
 		{
@@ -1017,7 +1017,7 @@ namespace FileSystem.Testing
 
 		// The output shall be organized by the manner given below. The output should be organized in
 		// alphabetical ascending order.
-		[ Test ]
+		[TestMethod]
 		public void Test_AutoSorting()
 		{
 			Manager.ExecuteCommand( @"MD cc" );
@@ -1084,7 +1084,7 @@ namespace FileSystem.Testing
 
 		#region Print
 
-		[ Test ]
+		[TestMethod]
 		public void Test_Print()
 		{
 			Manager.ExecuteCommand( @"MD c:\Dir1" );

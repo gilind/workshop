@@ -4,12 +4,12 @@ using FileSystem.Core.Commands;
 using FileSystem.Core.Exceptions;
 using FileSystem.Core.Parsing;
 using FileSystem.Core.Parsing.ConcreteClasses;
-using NUnit.Framework;
+using Microsoft.VisualStudio.TestTools.UnitTesting;
 
 namespace FileSystem.Testing
 {
-	[ TestFixture ]
-	public class ParsingTests
+    [TestClass]
+    public class ParsingTests
 	{
 		// Commands, file and directory names are case insensitive. Cd, CD, Cd, cD does mean the same thing.
 		public ParsingTests()
@@ -42,7 +42,7 @@ namespace FileSystem.Testing
 
 
 		// The output format for dynamic and hard links should be the following: hlink[ full path ] for hard links and dlink[ full path ] respectively.
-		[ Test ]
+		[TestMethod]
 		public void Test_RegexFindLinks()
 		{
 			const string pattern = @"[hd]link\[[^\]]+\]";
@@ -56,7 +56,7 @@ namespace FileSystem.Testing
 		}
 
 
-		[ Test ]
+		[TestMethod]
 		public void Test_RegexSplit()
 		{
 			const string pattern = @"^c:|[hd]link\[[^\]]+\]|[0-9a-zA-Z]+\.?[0-9a-zA-Z]*";
@@ -78,7 +78,7 @@ namespace FileSystem.Testing
 		}
 
 
-		[ Test ]
+		[TestMethod]
 		public void Test_PathInfo()
 		{
 			IPathInfo pathInfo = new PathInfo( @"c:\Dir1\Dir2\Dir3\file" );
@@ -117,7 +117,7 @@ namespace FileSystem.Testing
 
 		#region Unknown
 
-		[ Test ]
+		[TestMethod]
 		[ ExpectedException( typeof ( UnknownCommandException ) ) ]
 		public void Test_UnknownCommand()
 		{
@@ -125,7 +125,7 @@ namespace FileSystem.Testing
 		}
 
 
-		[ Test ]
+		[TestMethod]
 		[ ExpectedException( typeof ( UnknownCommandException ) ) ]
 		public void Test_UnknownCommand2()
 		{
@@ -137,7 +137,7 @@ namespace FileSystem.Testing
 
 		#region NOP
 
-		[ Test ]
+		[TestMethod]
 		public void Test_NOPCommand()
 		{
 			Parser.Parse( string.Empty );
@@ -160,7 +160,7 @@ namespace FileSystem.Testing
 		}
 
 
-		[ Test ]
+		[TestMethod]
 		[ ExpectedException( typeof ( CommandFormatException ) ) ]
 		public void Test_NOPCommand_FormatException()
 		{
@@ -172,7 +172,7 @@ namespace FileSystem.Testing
 
 		#region MD
 
-		[ Test ]
+		[TestMethod]
 		public void Test_MDCommand()
 		{
 			ICommand command = CommandFactory.CreateCommand( Manager, @"     MD       c:\test      " );
@@ -198,7 +198,7 @@ namespace FileSystem.Testing
 		}
 
 
-		[ Test ]
+		[TestMethod]
 		[ ExpectedException( typeof ( CommandFormatException ) ) ]
 		public void Test_MDCommand_FormatException()
 		{
@@ -206,7 +206,7 @@ namespace FileSystem.Testing
 		}
 
 
-		[ Test ]
+		[TestMethod]
 		[ ExpectedException( typeof ( CommandFormatException ) ) ]
 		public void Test_MDCommand_FormatException2()
 		{
@@ -218,7 +218,7 @@ namespace FileSystem.Testing
 
 		#region CD
 
-		[ Test ]
+		[TestMethod]
 		public void Test_CDCommand()
 		{
 			ICommand command = CommandFactory.CreateCommand( Manager, @"CD c:\test" );
@@ -234,7 +234,7 @@ namespace FileSystem.Testing
 		}
 
 
-		[ Test ]
+		[TestMethod]
 		[ ExpectedException( typeof ( CommandFormatException ) ) ]
 		public void Test_CDCommand_FormatException()
 		{
@@ -242,7 +242,7 @@ namespace FileSystem.Testing
 		}
 
 
-		[ Test ]
+		[TestMethod]
 		[ ExpectedException( typeof ( CommandFormatException ) ) ]
 		public void Test_CDCommand_FormatException2()
 		{
@@ -254,7 +254,7 @@ namespace FileSystem.Testing
 
 		#region RD
 
-		[ Test ]
+		[TestMethod]
 		public void Test_RDCommand()
 		{
 			ICommand command = CommandFactory.CreateCommand( Manager, @"RD c:\test" );
@@ -270,7 +270,7 @@ namespace FileSystem.Testing
 		}
 
 
-		[ Test ]
+		[TestMethod]
 		[ ExpectedException( typeof ( CommandFormatException ) ) ]
 		public void Test_RDCommand_FormatException()
 		{
@@ -278,7 +278,7 @@ namespace FileSystem.Testing
 		}
 
 
-		[ Test ]
+		[TestMethod]
 		[ ExpectedException( typeof ( CommandFormatException ) ) ]
 		public void Test_RDCommand_FormatException2()
 		{
@@ -290,7 +290,7 @@ namespace FileSystem.Testing
 
 		#region DELTREE
 
-		[ Test ]
+		[TestMethod]
 		public void Test_DELTREECommand()
 		{
 			ICommand command = CommandFactory.CreateCommand( Manager, @"DELTREE c:\test" );
@@ -306,7 +306,7 @@ namespace FileSystem.Testing
 		}
 
 
-		[ Test ]
+		[TestMethod]
 		[ ExpectedException( typeof ( CommandFormatException ) ) ]
 		public void Test_DELTREECommand_FormatException()
 		{
@@ -314,7 +314,7 @@ namespace FileSystem.Testing
 		}
 
 
-		[ Test ]
+		[TestMethod]
 		[ ExpectedException( typeof ( CommandFormatException ) ) ]
 		public void Test_DELTREECommand_FormatException2()
 		{
@@ -326,7 +326,7 @@ namespace FileSystem.Testing
 
 		#region MF
 
-		[ Test ]
+		[TestMethod]
 		public void Test_MFCommand()
 		{
 			ICommand command = CommandFactory.CreateCommand( Manager, @"MF c:\test" );
@@ -342,7 +342,7 @@ namespace FileSystem.Testing
 		}
 
 
-		[ Test ]
+		[TestMethod]
 		[ ExpectedException( typeof ( CommandFormatException ) ) ]
 		public void Test_MFCommand_FormatException()
 		{
@@ -350,7 +350,7 @@ namespace FileSystem.Testing
 		}
 
 
-		[ Test ]
+		[TestMethod]
 		[ ExpectedException( typeof ( CommandFormatException ) ) ]
 		public void Test_MFCommand_FormatException2()
 		{
@@ -362,7 +362,7 @@ namespace FileSystem.Testing
 
 		#region MHL
 
-		[ Test ]
+		[TestMethod]
 		public void Test_MHLCommand()
 		{
 			ICommand command = CommandFactory.CreateCommand( Manager, @" MHL    c:\test1  c:\test2" );
@@ -382,7 +382,7 @@ namespace FileSystem.Testing
 		}
 
 
-		[ Test ]
+		[TestMethod]
 		[ ExpectedException( typeof ( CommandFormatException ) ) ]
 		public void Test_MHLCommand_FormatException()
 		{
@@ -390,7 +390,7 @@ namespace FileSystem.Testing
 		}
 
 
-		[ Test ]
+		[TestMethod]
 		[ ExpectedException( typeof ( CommandFormatException ) ) ]
 		public void Test_MHLCommand_FormatException2()
 		{
@@ -398,7 +398,7 @@ namespace FileSystem.Testing
 		}
 
 
-		[ Test ]
+		[TestMethod]
 		[ ExpectedException( typeof ( CommandFormatException ) ) ]
 		public void Test_MHLCommand_FormatException3()
 		{
@@ -411,7 +411,7 @@ namespace FileSystem.Testing
 
 		#region MDL
 
-		[ Test ]
+		[TestMethod]
 		public void Test_MDLCommand()
 		{
 			ICommand command = CommandFactory.CreateCommand( Manager, @"   MDL   c:\test1     c:\test2     " );
@@ -431,7 +431,7 @@ namespace FileSystem.Testing
 		}
 
 
-		[ Test ]
+		[TestMethod]
 		[ ExpectedException( typeof ( CommandFormatException ) ) ]
 		public void Test_MDLCommand_FormatException()
 		{
@@ -439,7 +439,7 @@ namespace FileSystem.Testing
 		}
 
 
-		[ Test ]
+		[TestMethod]
 		[ ExpectedException( typeof ( CommandFormatException ) ) ]
 		public void Test_MDLCommand_FormatException2()
 		{
@@ -447,7 +447,7 @@ namespace FileSystem.Testing
 		}
 
 
-		[ Test ]
+		[TestMethod]
 		[ ExpectedException( typeof ( CommandFormatException ) ) ]
 		public void Test_MDLCommand_FormatException3()
 		{
@@ -460,7 +460,7 @@ namespace FileSystem.Testing
 
 		#region DEL
 
-		[ Test ]
+		[TestMethod]
 		public void Test_DELCommand()
 		{
 			ICommand command = CommandFactory.CreateCommand( Manager, @"DEL c:\test" );
@@ -476,7 +476,7 @@ namespace FileSystem.Testing
 		}
 
 
-		[ Test ]
+		[TestMethod]
 		[ ExpectedException( typeof ( CommandFormatException ) ) ]
 		public void Test_DELCommand_FormatException()
 		{
@@ -484,7 +484,7 @@ namespace FileSystem.Testing
 		}
 
 
-		[ Test ]
+		[TestMethod]
 		[ ExpectedException( typeof ( CommandFormatException ) ) ]
 		public void Test_DELCommand_FormatException2()
 		{
@@ -496,7 +496,7 @@ namespace FileSystem.Testing
 
 		#region COPY
 
-		[ Test ]
+		[TestMethod]
 		public void Test_COPYCommand()
 		{
 			ICommand command = CommandFactory.CreateCommand( Manager, @"   COPY   c:\test1     c:\test2     " );
@@ -516,7 +516,7 @@ namespace FileSystem.Testing
 		}
 
 
-		[ Test ]
+		[TestMethod]
 		[ ExpectedException( typeof ( CommandFormatException ) ) ]
 		public void Test_COPYCommand_FormatException()
 		{
@@ -524,7 +524,7 @@ namespace FileSystem.Testing
 		}
 
 
-		[ Test ]
+		[TestMethod]
 		[ ExpectedException( typeof ( CommandFormatException ) ) ]
 		public void Test_COPYCommand_FormatException2()
 		{
@@ -532,7 +532,7 @@ namespace FileSystem.Testing
 		}
 
 
-		[ Test ]
+		[TestMethod]
 		[ ExpectedException( typeof ( CommandFormatException ) ) ]
 		public void Test_COPYCommand_FormatException3()
 		{
@@ -545,7 +545,7 @@ namespace FileSystem.Testing
 
 		#region MOVE
 
-		[ Test ]
+		[TestMethod]
 		public void Test_MOVECommand()
 		{
 			ICommand command = CommandFactory.CreateCommand( Manager, @"   MOVE   c:\test1     c:\test2     " );
@@ -565,7 +565,7 @@ namespace FileSystem.Testing
 		}
 
 
-		[ Test ]
+		[TestMethod]
 		[ ExpectedException( typeof ( CommandFormatException ) ) ]
 		public void Test_MOVECommand_FormatException()
 		{
@@ -573,7 +573,7 @@ namespace FileSystem.Testing
 		}
 
 
-		[ Test ]
+		[TestMethod]
 		[ ExpectedException( typeof ( CommandFormatException ) ) ]
 		public void Test_MOVECommand_FormatException2()
 		{
@@ -581,7 +581,7 @@ namespace FileSystem.Testing
 		}
 
 
-		[ Test ]
+		[TestMethod]
 		[ ExpectedException( typeof ( CommandFormatException ) ) ]
 		public void Test_MOVECommand_FormatException3()
 		{

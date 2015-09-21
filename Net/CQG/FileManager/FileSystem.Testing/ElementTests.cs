@@ -1,17 +1,17 @@
 using FileSystem.Core.Composite;
 using FileSystem.Core.Exceptions;
-using NUnit.Framework;
+using Microsoft.VisualStudio.TestTools.UnitTesting;
 
 namespace FileSystem.Testing
 {
-	[ TestFixture ]
-	public class ElementTests
+    [TestClass]
+    public class ElementTests
 	{
 		public ElementTests()
 		{}
 
 
-		[ Test ]
+		[TestMethod]
 		public void Test_Element_Creating()
 		{
 			IElement file = ElementFactory.CreateFile( "file" );
@@ -21,7 +21,7 @@ namespace FileSystem.Testing
 		}
 
 
-		[ Test ]
+		[TestMethod]
 		[ ExpectedException( typeof ( ElementIsNotContainerException ) ) ]
 		public void Test_Element_Indexer_Exception()
 		{
@@ -29,7 +29,7 @@ namespace FileSystem.Testing
 		}
 
 
-		[ Test ]
+		[TestMethod]
 		[ ExpectedException( typeof ( ElementIsNotContainerException ) ) ]
 		public void Test_Element_AddChild_Exception()
 		{
@@ -37,7 +37,7 @@ namespace FileSystem.Testing
 		}
 
 
-		[ Test ]
+		[TestMethod]
 		[ ExpectedException( typeof ( ElementIsNotContainerException ) ) ]
 		public void Test_Element_RemoveChild_Exception()
 		{
@@ -45,7 +45,7 @@ namespace FileSystem.Testing
 		}
 
 
-		[ Test ]
+		[TestMethod]
 		public void Test_Container_Creating()
 		{
 			IElement dir = ElementFactory.CreateDirectory( "dir" );
@@ -55,7 +55,7 @@ namespace FileSystem.Testing
 		}
 
 
-		[ Test ]
+		[TestMethod]
 		[ ExpectedException( typeof ( ElementAlreadyExistsException ) ) ]
 		public void Test_Container_AddTwoEqualNames_Exception()
 		{
@@ -65,7 +65,7 @@ namespace FileSystem.Testing
 		}
 
 
-		[ Test ]
+		[TestMethod]
 		public void Test_Container_RemoveChild()
 		{
 			IElement dir = ElementFactory.CreateDirectory( "dir" );
@@ -77,7 +77,7 @@ namespace FileSystem.Testing
 		}
 
 
-		[ Test ]
+		[TestMethod]
 		public void Test_Container_AddElement_ChildrenCount_Indexers()
 		{
 			IElement root = ElementFactory.CreateRoot();
@@ -94,7 +94,7 @@ namespace FileSystem.Testing
 		}
 
 
-		[ Test ]
+		[TestMethod]
 		public void Test_Container_AutoSorting()
 		{
 			IElement root = ElementFactory.CreateRoot();
@@ -111,7 +111,7 @@ namespace FileSystem.Testing
 		}
 
 
-		[ Test ]
+		[TestMethod]
 		public void Test_Container_AddNestedElement()
 		{
 			IElement root = ElementFactory.CreateRoot();
@@ -142,7 +142,7 @@ namespace FileSystem.Testing
 		}
 
 
-		[ Test ]
+		[TestMethod]
 		public void Test_Container_CaseInsensitive()
 		{
 			IElement root = ElementFactory.CreateRoot();
@@ -159,7 +159,7 @@ namespace FileSystem.Testing
 		}
 
 
-		[ Test ]
+		[TestMethod]
 		public void Test_Container_Path()
 		{
 			IElement file =
