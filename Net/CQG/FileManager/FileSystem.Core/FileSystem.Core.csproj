@@ -1,0 +1,102 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003" ToolsVersion="14.0">
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProductVersion>8.0.50727</ProductVersion>
+    <SchemaVersion>2.0</SchemaVersion>
+    <ProjectGuid>{F92F99B2-4E45-44C4-955B-15D97A541937}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>FileSystem.Core</RootNamespace>
+    <AssemblyName>FileSystem.Core</AssemblyName>
+    <TargetFrameworkVersion>v2.0</TargetFrameworkVersion>
+    <FileUpgradeFlags>
+    </FileUpgradeFlags>
+    <UpgradeBackupLocation>
+    </UpgradeBackupLocation>
+    <OldToolsVersion>2.0</OldToolsVersion>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'UnitTesting|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <OutputPath>bin\UnitTesting\</OutputPath>
+    <DefineConstants>TRACE;DEBUG;UNIT</DefineConstants>
+    <DebugType>full</DebugType>
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <ErrorReport>prompt</ErrorReport>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="System" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Commands\CommandFactory.cs" />
+    <Compile Include="Commands\ConcreteClasses\CDCommand.cs" />
+    <Compile Include="Commands\Command.cs" />
+    <Compile Include="Commands\ConcreteClasses\COPYCommand.cs" />
+    <Compile Include="Commands\ConcreteClasses\DELCommand.cs" />
+    <Compile Include="Commands\ConcreteClasses\DELTREECommand.cs" />
+    <Compile Include="Commands\ConcreteClasses\DIRCommand.cs" />
+    <Compile Include="Commands\ICommand.cs" />
+    <Compile Include="Commands\ConcreteClasses\MXLCommand.cs" />
+    <Compile Include="Commands\ConcreteClasses\MDCommand.cs" />
+    <Compile Include="Commands\ConcreteClasses\MDLCommand.cs" />
+    <Compile Include="Commands\ConcreteClasses\MFCommand.cs" />
+    <Compile Include="Commands\ConcreteClasses\MHLCommand.cs" />
+    <Compile Include="Commands\ConcreteClasses\MOVECommand.cs" />
+    <Compile Include="Commands\ConcreteClasses\NOPCommand.cs" />
+    <Compile Include="Commands\ConcreteClasses\RDCommand.cs" />
+    <Compile Include="Composite\ElementFactory.cs" />
+    <Compile Include="Composite\IPrototype.cs" />
+    <Compile Include="Converting\ConcreteClasses\StringConverter.cs" />
+    <Compile Include="Converting\IStringConverter.cs" />
+    <Compile Include="Exceptions\Exceptions.cs" />
+    <Compile Include="Composite\Element.cs" />
+    <Compile Include="Composite\IElement.cs" />
+    <Compile Include="Composite\ElementContainer.cs" />
+    <Compile Include="Composite\ConcreteClasses\PseudoDLink.cs" />
+    <Compile Include="Composite\ConcreteClasses\PseudoDirectory.cs" />
+    <Compile Include="Composite\ConcreteClasses\PseudoFile.cs" />
+    <Compile Include="Composite\ConcreteClasses\PseudoRoot.cs" />
+    <Compile Include="Composite\ConcreteClasses\PseudoHLink.cs" />
+    <Compile Include="Composite\Proxy.cs" />
+    <Compile Include="FileManager.cs" />
+    <Compile Include="Parsing\ConcreteClasses\CommandParser.cs" />
+    <Compile Include="Composite\ConcreteClasses\NameValidator.cs" />
+    <Compile Include="Parsing\ICommandParser.cs" />
+    <Compile Include="Parsing\IPathInfo.cs" />
+    <Compile Include="Parsing\ConcreteClasses\PathInfo.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Diagrams\Exceptions.cd" />
+    <None Include="Diagrams\Commands.cd" />
+    <None Include="Diagrams\CompositeAndProxy.cd" />
+  </ItemGroup>
+  <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>

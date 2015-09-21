@@ -1,0 +1,31 @@
+md c:\dir1
+md c:\dir1\dir2
+md c:\dir1\dir2\dir3
+md c:\dir1\dir3
+md c:\dir2
+md c:\dir2\dir3
+md c:\dir3
+cd c:\dir1
+mf dir2\dir3\readme.txt
+mhl dir2\dir3\readme.txt dir3
+mdl dir2\dir3\readme.txt dir3
+mdl dir2\dir3\readme.txt c:\dir1
+mdl dir2\dir3\readme.txt c:\dir2
+mdl dir2\dir3\readme.txt c:\dir2\dir3
+mdl dir2\dir3\readme.txt c:\dir3
+mdl dir2\dir3\readme.txt c:
+dir
+cd c:
+move dir1 dir2
+del dir1\dir3\hlink[C:\dir1\dir2\dir3\readme.txt]
+move dir1 dir2
+dir
+mhl dir2\dir1\dir2\dir3\readme.txt c:
+dir
+del dir2\dir1\dir2\dir3\readme.txt
+del c:\hlink[C:\dir2\dir1\dir2\dir3\readme.txt]
+del dir2\dir1\dir2\dir3\readme.txt
+dir
+rd c:\dir2
+deltree c:\dir2
+rd dir3

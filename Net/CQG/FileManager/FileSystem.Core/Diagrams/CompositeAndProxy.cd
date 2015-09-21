@@ -1,0 +1,68 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<ClassDiagram MajorVersion="1" MinorVersion="1">
+  <Font Name="Tahoma" Size="8.25" />
+  <Class Name="FileSystem.Core.Composite.Element" Collapsed="true">
+    <Position X="3" Y="0.75" Width="1.5" />
+    <TypeIdentifier>
+      <FileName>Composite\Element.cs</FileName>
+      <HashCode>gABAKAACAAQAFBIEiEgARBQQAAIIQAAAAEAAAAARIVA=</HashCode>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" />
+  </Class>
+  <Class Name="FileSystem.Core.Composite.ElementContainer" Collapsed="true">
+    <Position X="4" Y="1.75" Width="1.5" />
+    <TypeIdentifier>
+      <FileName>Composite\ElementContainer.cs</FileName>
+      <HashCode>AEBAAAAAAAAAEAAACAAAAAAAAAIAAAAAAAAAAAAAABA=</HashCode>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="FileSystem.Core.Composite.Proxy" Collapsed="true">
+    <Position X="7.25" Y="1.75" Width="1.5" />
+    <TypeIdentifier>
+      <FileName>Composite\Proxy.cs</FileName>
+      <HashCode>AABACACCAAAAEBABigAABAQAAAIAQAAACAAAAAAQAAA=</HashCode>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="FileSystem.Core.Composite.ConcreteClasses.PseudoFile" Collapsed="true">
+    <Position X="2.25" Y="1.75" Width="1.5" />
+    <TypeIdentifier>
+      <FileName>Composite\ConcreteClasses\PseudoFile.cs</FileName>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAABA=</HashCode>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="FileSystem.Core.Composite.ConcreteClasses.PseudoHLink" Collapsed="true">
+    <Position X="6.5" Y="2.75" Width="1.5" />
+    <TypeIdentifier>
+      <FileName>Composite\ConcreteClasses\PseudoHLink.cs</FileName>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAABA=</HashCode>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="FileSystem.Core.Composite.ConcreteClasses.PseudoDLink" Collapsed="true">
+    <Position X="8.25" Y="2.75" Width="1.5" />
+    <TypeIdentifier>
+      <FileName>Composite\ConcreteClasses\PseudoDLink.cs</FileName>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAABA=</HashCode>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="FileSystem.Core.Composite.ConcreteClasses.PseudoDirectory" Collapsed="true">
+    <Position X="3" Y="2.75" Width="1.5" />
+    <TypeIdentifier>
+      <FileName>Composite\ConcreteClasses\PseudoDirectory.cs</FileName>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAABA=</HashCode>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="FileSystem.Core.Composite.ConcreteClasses.PseudoRoot" Collapsed="true">
+    <Position X="4.75" Y="2.75" Width="1.5" />
+    <TypeIdentifier>
+      <FileName>Composite\ConcreteClasses\PseudoRoot.cs</FileName>
+      <HashCode>AAAAAAAAAAAAAAAAAAAABAAAAAAAAAAAAEAAAAAAIAA=</HashCode>
+    </TypeIdentifier>
+  </Class>
+  <Interface Name="FileSystem.Core.Composite.IElement">
+    <Position X="0.5" Y="0.75" Width="1.5" />
+    <TypeIdentifier>
+      <FileName>Composite\IElement.cs</FileName>
+      <HashCode>AABACAACAAAAEBIAiAAABAQAAAIIQAAAAEAAAAAQIAA=</HashCode>
+    </TypeIdentifier>
+  </Interface>
+</ClassDiagram>
