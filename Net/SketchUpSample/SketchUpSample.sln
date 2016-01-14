@@ -3,7 +3,7 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 14
 VisualStudioVersion = 14.0.23107.0
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "IHL_CsR20ExtApp0", "CsExt20App0\IHL_CsR20ExtApp0.csproj", "{B6371103-5D26-4E97-83DB-91C259B06145}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "IHL_CsR20ExtApp0", "SketchUpSample\IHL_CsR20ExtApp0.csproj", "{B6371103-5D26-4E97-83DB-91C259B06145}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{F8ED54BD-A908-4E6E-88F4-26164AE8C08C}"
 	ProjectSection(SolutionItems) = preProject
