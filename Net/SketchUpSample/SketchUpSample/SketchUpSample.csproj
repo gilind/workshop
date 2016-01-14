@@ -7,8 +7,8 @@
     <ProjectGuid>{B6371103-5D26-4E97-83DB-91C259B06145}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>CsExtTutorial</RootNamespace>
-    <AssemblyName>IHL_CsR20ExtApp0</AssemblyName>
+    <RootNamespace>SketchUpSample</RootNamespace>
+    <AssemblyName>SketchUpSample</AssemblyName>
     <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
   </PropertyGroup>

@@ -1,16 +1,15 @@
 ﻿using RGiesecke.DllExport;
 using RubyDll;
-
 using VALUE = System.UInt32;
 using ID = System.UInt32;
 
 
-namespace CsExtTutorial
+namespace SketchUpSample
 {
     public static class CsExt
     {
-        static VALUE mCsExt;
-        const string ModuleName = "IHL_CsR20ExtApp0";
+        private const string ModuleName = "IHL_CsR20ExtApp0";
+        private static VALUE mCsExt;
 
         [DllExport]
         public static VALUE Init_ihl_csr20extapp0()
@@ -24,7 +23,7 @@ namespace CsExtTutorial
             Ruby.rb_define_method(MainWindowWrapper.klass, "initialize", MainWindowWrapper.Initialize);
             Ruby.rb_define_method(MainWindowWrapper.klass, "name", MainWindowWrapper.GetName);
             Ruby.rb_define_method(MainWindowWrapper.klass, "name=", MainWindowWrapper.SetName);
-             
+
             #endregion
 
             //test

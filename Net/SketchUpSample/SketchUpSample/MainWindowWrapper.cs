@@ -1,33 +1,27 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Diagnostics;
 using System.Globalization;
-using System.Linq;
-using System.Security.Cryptography.X509Certificates;
-using System.Text;
 using System.Threading;
-using System.Threading.Tasks;
 using System.Windows.Threading;
-using RubyDll;
 
-namespace CsExtTutorial
+namespace SketchUpSample
 {
     internal partial class MainWindowWrapper
     {
-        public string Name { get; set; }
-
-        public MainWindow _window = null;
+        private static Object windowLock = new Object();
+        public MainWindow _window;
 
         public MainWindowWrapper(string name)
         {
-            this.Name = name;
+            Name = name;
             InitializeWindow();
         }
+
+        public string Name { get; set; }
+
         ~MainWindowWrapper()
         {
         }
 
-        private static Object windowLock = new Object();
         public void InitializeWindow()
         {
             Dispatcher rubyThreadDispatcher = Dispatcher.CurrentDispatcher;
@@ -38,16 +32,13 @@ namespace CsExtTutorial
                 lock (windowLock)
                 {
                     _window = new MainWindow(rubyThreadDispatcher);
-                    _window.Title = this.Name;
+                    _window.Title = Name;
                 }
 
-                _window.Closed += (sender2, e2) =>
-                {
-                    _window.Dispatcher.InvokeShutdown();
-                };
+                _window.Closed += (sender2, e2) => { _window.Dispatcher.InvokeShutdown(); };
                 _window.Show();
 
-                System.Windows.Threading.Dispatcher.Run();
+                Dispatcher.Run();
             });
 
             thread.SetApartmentState(ApartmentState.STA);
@@ -57,19 +48,18 @@ namespace CsExtTutorial
 
             for (int waited = 0; waited < 1000 && _window == null; waited += 10)
             {
-                System.Threading.Thread.Sleep(10);
+                Thread.Sleep(10);
             }
         }
 
         public void ShowMainWindow()
         {
             if (_window == null) return;
-            _window.Dispatcher.BeginInvoke((Action)(() =>
+            _window.Dispatcher.BeginInvoke((Action) (() =>
             {
                 _window.Show();
                 _window.Activate();
-            }), System.Windows.Threading.DispatcherPriority.ContextIdle, null);
+            }), DispatcherPriority.ContextIdle, null);
         }
-
     }
 }

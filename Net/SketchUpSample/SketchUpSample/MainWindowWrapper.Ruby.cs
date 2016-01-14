@@ -1,44 +1,20 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Diagnostics;
-using System.Linq;
 using System.Runtime.InteropServices;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows;
 using RubyDll;
 using VALUE = System.UInt32;
 using ID = System.UInt32;
 
-namespace CsExtTutorial
+namespace SketchUpSample
 {
     internal partial class MainWindowWrapper
     {
         public static VALUE klass = Ruby.Qundef;
-        #region Ruby Free Function
-        private static Delegate _freeFunc;
-        public static Delegate FreeFunc
-        {
-            get
-            {
-                if (_freeFunc == null)
-                    SetFreeFunc(Deallocate);
-                return _freeFunc;
-            }
-        }
-
-        private static void SetFreeFunc(Ruby.RUBY_DATA_FUNC free)
-        {
-            _freeFunc = free;
-        }
-
-        #endregion
 
         public static VALUE GetName(VALUE self)
         {
             IntPtr pointer = Ruby.Data_Get_Struct(self);
             GCHandle handle = GCHandle.FromIntPtr(pointer);
-            MainWindowWrapper instance = (MainWindowWrapper)handle.Target;
+            MainWindowWrapper instance = (MainWindowWrapper) handle.Target;
             if (instance != null)
             {
                 return Ruby.rb_str_new2(instance.Name);
@@ -50,7 +26,7 @@ namespace CsExtTutorial
         {
             IntPtr pointer = Ruby.Data_Get_Struct(self);
             GCHandle handle = GCHandle.FromIntPtr(pointer);
-            MainWindowWrapper instance = (MainWindowWrapper)handle.Target;
+            MainWindowWrapper instance = (MainWindowWrapper) handle.Target;
             if (instance != null)
             {
                 Ruby.Check_Type(val, Ruby.T_STRING);
@@ -64,7 +40,7 @@ namespace CsExtTutorial
         {
             try
             {
-                VALUE obj = Ruby.Data_Wrap_Struct(klass, null, MainWindowWrapper.FreeFunc, IntPtr.Zero);
+                VALUE obj = Ruby.Data_Wrap_Struct(klass, null, FreeFunc, IntPtr.Zero);
                 return obj;
             }
             catch (Exception exception)
@@ -85,7 +61,7 @@ namespace CsExtTutorial
             {
                 if (handle.IsAllocated)
                 {
-                    handle.Free();   
+                    handle.Free();
                 }
             }
             catch (Exception exception)
@@ -123,6 +99,26 @@ namespace CsExtTutorial
                 return Ruby.Qnil;
             }
         }
-    }
 
+        #region Ruby Free Function
+
+        private static Delegate _freeFunc;
+
+        public static Delegate FreeFunc
+        {
+            get
+            {
+                if (_freeFunc == null)
+                    SetFreeFunc(Deallocate);
+                return _freeFunc;
+            }
+        }
+
+        private static void SetFreeFunc(Ruby.RUBY_DATA_FUNC free)
+        {
+            _freeFunc = free;
+        }
+
+        #endregion
+    }
 }
