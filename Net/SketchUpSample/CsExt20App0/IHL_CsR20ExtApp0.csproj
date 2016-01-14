@@ -92,8 +92,10 @@
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>
-    <PostBuildEvent>copy /Y "$(ProjectDir)test_$(TargetName).rb" "$(SolutionDir)\ToPluginsFolder\"
+    <PostBuildEvent>xcopy /Y /I "$(ProjectDir)test_$(TargetName).rb" "$(SolutionDir)\ToPluginsFolder\"
+
 copy /Y "$(TargetDir)$(TargetFileName)" "$(SolutionDir)\ToPluginsFolder\$(TargetName).so"
+
 copy /Y "$(TargetDir)$(TargetFileName)" "%25USERPROFILE%25\AppData\Roaming\SketchUp\SketchUp 2014\SketchUp\Plugins\$(TargetName).so"
 </PostBuildEvent>
   </PropertyGroup>
